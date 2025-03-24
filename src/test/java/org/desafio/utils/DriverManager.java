@@ -9,9 +9,19 @@ import java.util.List;
 public class DriverManager {
     private static WebDriver driver;
     private static List<WebDriver> drivers = new ArrayList<>();
-    public DriverManager() {
-    }
 
+
+
+    public static void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
+    }
+    public DriverManager() {
+        System.setProperty("webdriver.edge.driver", "C:\\edgedriver_win64\\msedgedriver.exe");
+        driver = new EdgeDriver();
+    }
     public static void addDriver(WebDriver driver) {
         drivers.add(driver);
     }
@@ -21,19 +31,11 @@ public class DriverManager {
                 driver.quit();
             }
         }
-        drivers.clear();
     }
     public static WebDriver getDriver() {
         if (driver == null) {
-            System.setProperty("webdriver.edge.driver", "C:\\edgedriver_win64\\msedgedriver.exe");
             driver = new EdgeDriver();
         }
         return driver;
-    }
-    public static void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
     }
 }

@@ -24,6 +24,7 @@ public class ChekoutSteps {
     private String scenarioName;
     @Before
     public void setUp(Scenario scenario) throws IOException {
+        DriverManager.getDriver(); // Inicializa o WebDriver
         utilities = new Utilities();
         homeLogic = new HomeLogic();
         loginLogic = new LoginLogic();

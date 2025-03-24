@@ -28,7 +28,7 @@ public class LoginSteps {
         utilities = new Utilities();
         loginLogic = new LoginLogic();
         homeLogic = new HomeLogic();
-        driverManager = new DriverManager();
+        DriverManager.getDriver();
         scenarioName = scenario.getName();
         documentEvidence = utilities.createDocumentPDF(scenarioName);
     }

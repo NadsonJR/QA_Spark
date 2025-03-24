@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
-import java.sql.Driver;
-
 @Log4j2
 public class LoginLogic {
     private String step = "";
