@@ -1,15 +1,17 @@
 package org.desafio.steps;
 
 import com.itextpdf.layout.Document;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import lombok.extern.log4j.Log4j2;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
 import org.desafio.logic.utils.Utilities;
 import org.desafio.utils.DriverManager;
-import org.openqa.selenium.WebDriver;
+
 
 import java.io.IOException;
 
@@ -42,6 +44,26 @@ public class ChekoutSteps {
     @Given("Add the Sauce Bike Light to cart")
     public void add_the_sauce_bike_light_to_cart() throws InterruptedException {
         homeLogic.addSauceBikeLightToCart(documentEvidence);
+    }
+    @Given("Checkout the product")
+    public void checkout_the_product() throws InterruptedException {
+        homeLogic.openCart(documentEvidence);
+        homeLogic.verifyCart(documentEvidence);
+        homeLogic.clickCheckoutButton(documentEvidence);
+        homeLogic.fillZipForm(documentEvidence);
+        homeLogic.clickContinueButton(documentEvidence);
+    }
+
+    @Then("Confirm the order")
+    public void confirm_the_order() throws InterruptedException {
+        homeLogic.validateOverview(documentEvidence);
+        homeLogic.clickFinishButton(documentEvidence);
+        homeLogic.validateCompleteCheckout(documentEvidence);
+    }
+    @After
+    public void tearDown(){
+        utilities.generateDocumentPDF(documentEvidence,scenarioName);
+        DriverManager.quitAllDrivers();
     }
 
 }
