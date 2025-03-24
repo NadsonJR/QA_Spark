@@ -1,4 +1,4 @@
-package org.desafio.logic.runner;
+package org.desafio.runner;
 
 import org.junit.platform.suite.api.*;
 import static io.cucumber.junit.platform.engine.Constants.*;

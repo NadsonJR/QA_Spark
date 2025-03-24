@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
 import org.desafio.logic.utils.Utilities;
+import org.desafio.utils.DriverManager;
 
 import java.io.IOException;
 @Log4j2
@@ -17,23 +18,19 @@ public class LoginSteps {
 
     private LoginLogic loginLogic;
     private HomeLogic homeLogic;
+    private DriverManager driverManager;
     private Utilities utilities;
     private String scenarioName;
     private Document documentEvidence;
+
     @Before
     public void setUp(Scenario scenario) throws IOException {
         utilities = new Utilities();
         loginLogic = new LoginLogic();
         homeLogic = new HomeLogic();
-        String edgeDriverPath = "C:\\edgedriver_win64\\msedgedriver.exe"; // Caminho correto para o executável
-        System.setProperty("webdriver.edge.driver", edgeDriverPath);
+        driverManager = new DriverManager();
         scenarioName = scenario.getName();
         documentEvidence = utilities.createDocumentPDF(scenarioName);
-    }
-
-    @Given("I open the Swag Labs")
-    public void i_open_the_swag_labs() {
-        loginLogic.navigateTo("https://www.saucedemo.com");
     }
 
     @Given("I open the login page")
@@ -80,6 +77,6 @@ public class LoginSteps {
     @After
     public void tearDown(){
         utilities.generateDocumentPDF(documentEvidence,scenarioName);
-        Utilities.quitAllDrivers();
+        DriverManager.quitAllDrivers();
     }
 }

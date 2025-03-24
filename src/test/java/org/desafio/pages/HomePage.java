@@ -1,4 +1,4 @@
-package org.desafio.logic.pages;
+package org.desafio.pages;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
@@ -10,8 +10,12 @@ import org.openqa.selenium.WebElement;
 public class HomePage {
 
     private WebDriver driver;
+
     // Web elements
     private By homePageTitle = By.xpath("//span[@class='title'][contains(text(),'Products')]");
+    private By sauceBikeLightBtnAddCart = By.id("add-to-cart-sauce-labs-bike-light");
+    private By cart = By.xpath("//span[@id='shopping_cart_container']");
+    private By removeBtnBikeLight = By.id("remove-sauce-labs-bike-light");
 
     // Constructor
     public HomePage(WebDriver driver) {
@@ -22,5 +26,16 @@ public class HomePage {
     public void validateLogin() {
         WebElement homePageTitleElement = driver.findElement(homePageTitle);
         Assert.assertEquals(homePageTitleElement.getText(),"Products");
+    }
+    public void addSauceBikeLightToCart() {
+        WebElement btnAddCartBikeLight =driver.findElement(sauceBikeLightBtnAddCart);
+        btnAddCartBikeLight.click();
+        WebElement removeBtnBikeLightElement = driver.findElement(removeBtnBikeLight);
+        removeBtnBikeLightElement.isDisplayed();
+    }
+
+    public void validateCart() {
+        WebElement cartElement = driver.findElement(cart);
+        Assert.assertEquals(cartElement.getText(),"1");
     }
 }

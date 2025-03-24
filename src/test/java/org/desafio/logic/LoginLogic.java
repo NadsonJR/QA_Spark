@@ -3,27 +3,31 @@ import io.qameta.allure.Step;
 import com.itextpdf.layout.Document;
 import lombok.extern.log4j.Log4j2;
 import org.desafio.logic.pages.LoginPage;
-import org.desafio.logic.pages.HomePage;
 import org.desafio.logic.utils.Utilities;
+import org.desafio.pages.HomePage;
+import org.desafio.utils.DriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
+import java.sql.Driver;
+
 @Log4j2
 public class LoginLogic {
     private String step = "";
-    private WebDriver driver;
+    public WebDriver driver;
     private Utilities utilities;
     private LoginPage loginPage;
     private HomePage homePage;
 
     public LoginLogic() {
         utilities = new Utilities();
-        driver = new EdgeDriver();
-        Utilities.addDriver(driver);
+        driver = DriverManager.getDriver();// Initialize the driver
+        DriverManager.addDriver(driver);
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
     }
+
     @Step("Navigate to URL {url}")
     public void navigateTo(String url){
         step = "Navigate to URL " + url;

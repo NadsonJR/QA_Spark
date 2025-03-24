@@ -28,28 +28,8 @@ import java.util.List;
 @Log4j2
 public class Utilities {
     private List<String> screenshots = new ArrayList<>();
-    private static List<WebDriver> drivers = new ArrayList<>();
-    public static void addDriver(WebDriver driver) {
-        drivers.add(driver);
-    }
-    public static void quitAllDrivers() {
-        for (WebDriver driver : drivers) {
-            if (driver != null) {
-                driver.quit();
-            }
-        }
-        drivers.clear();
-    }
-    public void runPowerShellCommand(String command) {
-        try {
-            ProcessBuilder processBuilder = new ProcessBuilder("powershell.exe", command);
-            processBuilder.redirectErrorStream(true);
-            Process process = processBuilder.start();
-            process.waitFor();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+
     public void takeScreenshot(WebDriver driver, String fileName, Document documentEvidence) throws InterruptedException {
         // Adiciona um atraso de 1 segundos
         Thread.sleep(1000);
