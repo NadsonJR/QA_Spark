@@ -1,6 +1,3 @@
-I'll update the README.md to include the K6 load testing instructions:
-
-```markdown
 # Web Automation Project
 
 Automated testing project using Selenium WebDriver, Cucumber, Java, and K6 for load testing.
