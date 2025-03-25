@@ -89,6 +89,10 @@ Performance thresholds:
 
 ## Test Reports
 
+## Important
+- Make sure you have run the tests before generating reports
+- To view the evidence of the executed tests, access the evidence folder.
+
 After test execution:
 1. HTML reports are generated in `target/cucumber-reports`
 2. PDF evidence is generated for each test case
@@ -101,6 +105,34 @@ To view detailed test execution reports:
 ```bash
 mvn allure:serve
 ```
+
+## CI/CD Pipeline
+
+Our project uses GitHub Actions for continuous integration and delivery. The pipeline:
+
+1. Triggers on:
+   - Push to main branch
+   - Pull requests to main branch
+
+2. Test Execution:
+   - Sets up Java 11 and Edge browser
+   - Installs Edge WebDriver
+   - Installs K6 for load testing
+   - Runs E2E tests with Maven
+   - Runs load tests with K6
+   - Generates Allure reports
+
+3. Artifacts:
+   - Cucumber HTML reports
+   - Allure reports
+   - PDF test evidences
+   - JUnit test results
+
+4. View Results:
+   - Go to "Actions" tab in GitHub
+   - Select latest workflow run
+   - Download artifacts for detailed reports
+   - View test summary in workflow details
 
 ## Features
 
