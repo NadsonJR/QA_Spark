@@ -1,4 +1,4 @@
-@Web @Checkout
+@Web @Checkout @All
 
 Feature: Checkout feature
 

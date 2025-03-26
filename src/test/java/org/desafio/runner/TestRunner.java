@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/org/desafio/features/",
         glue = "org.desafio.steps",
         plugin = {"pretty", "html:target/cucumber-reports"},
-        tags= "@Web",
+        tags= "@All",
         monochrome = true
 )
 public class TestRunner {

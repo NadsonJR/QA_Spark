@@ -1,4 +1,4 @@
-@login @Web
+@login @Web @All
 Feature: Example feature
 
   Scenario: TC0001 - Open home page

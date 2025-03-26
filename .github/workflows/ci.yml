@@ -29,7 +29,9 @@ jobs:
 
       - name: Install k6
         run: |
-          ch Cache Maven packages
+          choco install k6 -y
+
+      - name: Cache Maven packages
         uses: actions/cache@v2
         with:
           path: ~/.m2
@@ -43,7 +45,6 @@ jobs:
         run: k6 run src/load-tests/test-script.js
 
       - name: Generate Allure Report
-        run: |
           mvn allure:report
 
       - name: Upload Test Results

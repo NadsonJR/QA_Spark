@@ -1,4 +1,4 @@
-@API
+@API @All
 Feature: API
     Scenario: TC0001 - Get users
         Given I get users
