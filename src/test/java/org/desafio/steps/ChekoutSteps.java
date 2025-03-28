@@ -7,6 +7,7 @@ import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.extern.log4j.Log4j2;
+import org.desafio.config.CucumberHooks;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
 import org.desafio.utils.Utilities;
@@ -23,14 +24,12 @@ public class ChekoutSteps {
     private LoginLogic loginLogic;
     private Utilities utilities;
     private String scenarioName;
-    @Before
-    public void setUp(Scenario scenario) throws IOException {
-        DriverManager.getDriver(); // Inicializa o WebDriver
+
+    public ChekoutSteps()  {
         utilities = new Utilities();
         homeLogic = new HomeLogic();
         loginLogic = new LoginLogic();
-        scenarioName = scenario.getName();
-        documentEvidence = utilities.createDocumentPDF(scenarioName);
+        documentEvidence = CucumberHooks.getDocumentEvidence();
     }
 
     @Given("I open the Swag Labs")
@@ -63,10 +62,6 @@ public class ChekoutSteps {
         homeLogic.clickFinishButton(documentEvidence);
         homeLogic.validateCompleteCheckout(documentEvidence);
     }
-    @After
-    public void tearDown(){
-        utilities.generateDocumentPDF(documentEvidence,scenarioName);
-        DriverManager.quitAllDrivers();
-    }
+
 
 }

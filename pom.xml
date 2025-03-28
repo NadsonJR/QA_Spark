@@ -171,6 +171,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- WebdriverManager (para gerenciamento de drivers de navegador) -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>6.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- JSON parsing (Jackson já incluso no Spring Boot Web) -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -205,6 +213,26 @@
                     <source>21</source>
                     <target>21</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>setup-edgedriver</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>bash</executable>
+                            <arguments>
+                                <argument>setup-edgedriver.sh</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>

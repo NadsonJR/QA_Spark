@@ -7,6 +7,7 @@ import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.extern.log4j.Log4j2;
+import org.desafio.config.CucumberHooks;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
 import org.desafio.utils.Utilities;
@@ -25,14 +26,10 @@ public class LoginSteps {
     private String scenarioName;
     private Document documentEvidence;
 
-    @Before
-    public void setUp(Scenario scenario) throws IOException {
-        DriverManager.getDriver();
-        utilities = new Utilities();
+    public LoginSteps() {
         loginLogic = new LoginLogic();
         homeLogic = new HomeLogic();
-        scenarioName = scenario.getName();
-        documentEvidence = utilities.createDocumentPDF(scenarioName);
+        documentEvidence = CucumberHooks.getDocumentEvidence();
     }
 
     @Given("I open the login page")
@@ -75,10 +72,5 @@ public class LoginSteps {
     @Then("Validate error login message")
     public void validate_error_login_message() throws InterruptedException {
         loginLogic.validateErrorPassword(documentEvidence);
-    }
-    @After
-    public void tearDown(){
-        utilities.generateDocumentPDF(documentEvidence,scenarioName);
-        DriverManager.quitDriver();
     }
 }

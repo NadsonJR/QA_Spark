@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/org/desafio/features/",
-        glue = "org.desafio.steps",
+        glue = {"org.desafio.steps", "org.desafio.config"},
         plugin = {"pretty", "html:target/cucumber-reports"},
         tags= "@All",
         monochrome = true

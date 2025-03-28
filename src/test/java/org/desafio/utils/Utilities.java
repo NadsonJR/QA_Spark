@@ -8,6 +8,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import io.qameta.allure.Attachment;
+import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 
@@ -77,6 +78,13 @@ public class Utilities {
     public void generateDocumentPDF(Document document, String scenarioName) {
         document.close();
         log.info("Document generated: " + scenarioName);
+    }
+
+    public void addResponseToDocument(Document document, Response response) {
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        document.add(new Paragraph("Status code: " + statusCode));
+        document.add(new Paragraph("Response: " + responseBody));
     }
 
 }

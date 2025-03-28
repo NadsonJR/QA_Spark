@@ -57,6 +57,7 @@ public class HomePage {
         cartElement.click();
     }
     public void verifyCart() throws InterruptedException {
+
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(itemCart);
         String itemInfo = cartElement.getText();
