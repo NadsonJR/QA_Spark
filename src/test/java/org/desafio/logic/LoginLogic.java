@@ -8,7 +8,8 @@ import org.desafio.pages.HomePage;
 import org.desafio.utils.DriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
+
+import java.io.IOException;
 
 @Log4j2
 public class LoginLogic {
@@ -34,7 +35,7 @@ public class LoginLogic {
         driver.manage().window().maximize();
     }
     @Step("Validate title {expectedTitle}")
-    public void validateTitle(String expectedTitle, Document documentEvidence) throws InterruptedException {
+    public void validateTitle(String expectedTitle, Document documentEvidence) throws InterruptedException, IOException {
         step = "Validate title";
         log.info(step);
         String actualTitle = loginPage.getPageTitle();
@@ -48,7 +49,7 @@ public class LoginLogic {
         }
     }
     @Step("Enter email {text}")
-    public void enterEmail(String text, Document documentEvidence) throws InterruptedException {
+    public void enterEmail(String text, Document documentEvidence) throws InterruptedException, IOException {
         step = "Fill input email";
         log.info(step);
         loginPage.enterEmail(text);
@@ -56,21 +57,21 @@ public class LoginLogic {
     }
 
     @Step("Enter username {text}")
-    public void enterUsername(String username, Document documentEvidence) throws InterruptedException {
+    public void enterUsername(String username, Document documentEvidence) throws InterruptedException, IOException {
         step = "Fill input username";
         log.info(step);
         loginPage.enterUsername(username);
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Enter password {text}")
-    public void enterPassword(String password, Document documentEvidence) throws InterruptedException {
+    public void enterPassword(String password, Document documentEvidence) throws InterruptedException, IOException {
         step = "Fill input password";
         log.info(step);
         loginPage.enterPassword(password);
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Click login button")
-    public void clickLoginButton(Document documentEvidence) throws InterruptedException {
+    public void clickLoginButton(Document documentEvidence) throws InterruptedException, IOException {
         step = "Click login button";
         log.info(step);
         loginPage.clickLoginButton();
@@ -78,7 +79,7 @@ public class LoginLogic {
     }
 
     @Step("Validate Title Products")
-    public void validateTitleProducts(Document documentEvidence) throws InterruptedException {
+    public void validateTitleProducts(Document documentEvidence) throws InterruptedException, IOException {
         step = "Validate title";
         log.info(step);
         homePage.validateLogin();
@@ -93,7 +94,7 @@ public class LoginLogic {
     }
 
     @Step("Validate text {expectedText}")
-    public void validateText(String expectedText, Document documentEvidence) throws InterruptedException {
+    public void validateText(String expectedText, Document documentEvidence) throws InterruptedException, IOException {
         step = "Validate text";
         log.info(step);
         boolean isTextPresent = loginPage.isTextPresent(expectedText);

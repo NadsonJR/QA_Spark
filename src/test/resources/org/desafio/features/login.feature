@@ -1,6 +1,7 @@
 @login @Web @All
 Feature: Example feature
 
+  @Login001
   Scenario: TC0001 - Open home page
     Given I open the login page
     And I should see the title "Swag Labs"

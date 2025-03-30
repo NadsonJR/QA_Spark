@@ -10,7 +10,6 @@ import java.nio.Buffer;
 
 @Log4j2
 public class HomePage {
-
     private WebDriver driver;
 
     // Web elements
@@ -57,7 +56,6 @@ public class HomePage {
         cartElement.click();
     }
     public void verifyCart() throws InterruptedException {
-
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(itemCart);
         String itemInfo = cartElement.getText();

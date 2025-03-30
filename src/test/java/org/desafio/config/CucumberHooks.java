@@ -9,14 +9,13 @@ import lombok.Setter;
 import org.desafio.utils.DriverManager;
 import org.desafio.utils.Utilities;
 import io.restassured.response.Response;
-
 import java.io.IOException;
-
 public class CucumberHooks {
 
     @Getter
     private static Document documentEvidence;
     private static String scenarioName;
+    private static String scenarioTag;
     private static final Utilities utilities = new Utilities();
 
     @Setter
@@ -26,15 +25,13 @@ public class CucumberHooks {
     public void setUp(Scenario scenario) throws IOException {
         DriverManager.getDriver();
         scenarioName = scenario.getName();
-        documentEvidence = utilities.createDocumentPDF(scenarioName);
+        scenarioTag = scenario.getSourceTagNames().iterator().next().replace("@", "");
+        documentEvidence = utilities.createDocumentPDF(scenarioName, scenarioTag);
     }
-
     @After(order = 1)
-    public void tearDown() {
-        if (response != null) {
-            utilities.addResponseToDocument(documentEvidence, response);
-        }
-        utilities.generateDocumentPDF(documentEvidence, scenarioName);
+    public void tearDown(Scenario scenario) throws IOException {
+        String status = scenario.isFailed() ? "FAILED" : "PASSED";
+        utilities.generateDocumentPDF(documentEvidence, scenarioName, status);
         DriverManager.quitDriver();
     }
 

@@ -37,35 +37,32 @@ public class LoginSteps {
         loginLogic.navigateTo("https://www.saucedemo.com");
     }
     @Then("I should see the title {string}")
-    public void i_should_see_the_title(String expectedTitle) throws InterruptedException {
+    public void i_should_see_the_title(String expectedTitle) throws InterruptedException, IOException {
         loginLogic.validateTitle(expectedTitle, documentEvidence);
     }
-
     @Then("I should see the text {string}")
-    public void i_should_see_the_text(String string) throws InterruptedException {
+    public void i_should_see_the_text(String string) throws InterruptedException, IOException {
         loginLogic.validateText(string, documentEvidence);
     }
-
     @Given("fill e-mail input {string}")
-    public void fill_e_mail_input(String email) throws InterruptedException {
+    public void fill_e_mail_input(String email) throws InterruptedException, IOException {
         loginLogic.enterEmail(email, documentEvidence);
     }
-
     @Given("fill username input {string}")
-    public void fill_username_input(String username) throws InterruptedException {
+    public void fill_username_input(String username) throws InterruptedException, IOException {
         loginLogic.enterUsername(username, documentEvidence);
     }
     @Given("fill password input {string}")
-    public void fill_password_input(String password) throws InterruptedException {
+    public void fill_password_input(String password) throws InterruptedException, IOException {
         loginLogic.enterPassword(password, documentEvidence);
     }
     @Then("click on btn login")
-    public void click_on_btn_login() throws InterruptedException {
+    public void click_on_btn_login() throws InterruptedException, IOException {
         loginLogic.clickLoginButton(documentEvidence);
     }
 
     @Then("Validate if user is logged in")
-    public void validate_if_user_is_logged_in() throws InterruptedException {
+    public void validate_if_user_is_logged_in() throws InterruptedException, IOException {
         loginLogic.validateTitleProducts(documentEvidence);
     }
 

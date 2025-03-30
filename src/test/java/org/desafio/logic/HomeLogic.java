@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.desafio.pages.HomePage;
 import org.desafio.utils.Utilities;
 
+import java.io.IOException;
+
 
 @Log4j2
 public class HomeLogic {
@@ -21,9 +23,8 @@ public class HomeLogic {
         driver = DriverManager.getDriver(); // Initialize the driver
         homePage = new HomePage(driver); // Pass the driver to HomePage
     }
-
     @Step("Add the Sauce Bike Light to cart")
-    public void addSauceBikeLightToCart(Document documentEvidence) throws InterruptedException {
+    public void addSauceBikeLightToCart(Document documentEvidence) throws InterruptedException, IOException {
         step = "Add the Sauce Bike Light to cart";
         log.info(step);
         homePage.addSauceBikeLightToCart();
@@ -31,49 +32,49 @@ public class HomeLogic {
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Open the cart")
-    public void openCart(Document documentEvidence) throws InterruptedException {
+    public void openCart(Document documentEvidence) throws InterruptedException, IOException {
         step = "Open the cart";
         log.info(step);
         homePage.openCart();
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Verify the cart")
-    public void verifyCart(Document documentEvidence) throws InterruptedException {
+    public void verifyCart(Document documentEvidence) throws InterruptedException, IOException {
         step = "Verify the cart";
         log.info(step);
         homePage.verifyCart();
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Click on Checkout button")
-    public void clickCheckoutButton(Document documentEvidence) throws InterruptedException {
+    public void clickCheckoutButton(Document documentEvidence) throws InterruptedException, IOException {
         step = "Click on Checkout button";
         log.info(step);
         homePage.clickCheckoutButton();
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Fill zip form")
-    public void fillZipForm(Document documentEvidence) throws InterruptedException {
+    public void fillZipForm(Document documentEvidence) throws InterruptedException, IOException {
         step = "Fill zip form";
         log.info(step);
         homePage.fillZipForm();
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Click on continue button")
-    public void clickContinueButton(Document documentEvidence) throws InterruptedException {
+    public void clickContinueButton(Document documentEvidence) throws InterruptedException, IOException {
         step = "Click on continue button";
         log.info(step);
         homePage.clickContinueButton();
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Validate the overview")
-    public void validateOverview(Document documentEvidence) throws InterruptedException {
+    public void validateOverview(Document documentEvidence) throws InterruptedException, IOException {
         step = "Validate the overview";
         log.info(step);
         homePage.validateOverview();
         utilities.takeScreenshot(driver, step + ".png", documentEvidence);
     }
     @Step("Click on finish button")
-    public void clickFinishButton(Document documentEvidence) throws InterruptedException {
+    public void clickFinishButton(Document documentEvidence) throws InterruptedException, IOException {
         step = "Click on finish button";
         log.info(step);
         homePage.clickFinishButton();
@@ -81,7 +82,7 @@ public class HomeLogic {
     }
 
     @Step("Validate the complete checkout")
-    public void validateCompleteCheckout(Document documentEvidence) throws InterruptedException {
+    public void validateCompleteCheckout(Document documentEvidence) throws InterruptedException, IOException {
         step = "Validate the complete checkout";
         log.info(step);
         homePage.validateCompleteCheckout();

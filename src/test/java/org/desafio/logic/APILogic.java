@@ -1,6 +1,5 @@
 package org.desafio.logic;
 
-import com.itextpdf.layout.Document;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -14,23 +13,23 @@ public class APILogic {
         utilities = new Utilities();
     }
     @Step("Get users")
-    public Response getUsers(Document documentEvidence) {
+    public Response getUsers() {
         response = RestAssured.given()
                 .when()
                 .get("https://reqres.in/api/users");
-        utilities.addResponseToDocument(documentEvidence, response);
+        utilities.addResponseToDocument(response);
         return response;
     }
     @Step("Get user by id {id}")
-    public Response getUserById(int id, Document documentEvidence) {
+    public Response getUserById(int id) {
         response = RestAssured.given()
                 .when()
                 .get("https://reqres.in/api/users/" + id);
-        utilities.addResponseToDocument(documentEvidence, response);
+        utilities.addResponseToDocument(response);
         return response;
     }
     @Step("Create user with email {email} and password {password}")
-    public Response createUser(String email, String password, Document documentEvidence) {
+    public Response createUser(String email, String password) {
         response = RestAssured.given()
                 .body("{\n" +
                         "    \"email\": \"" + email + "\",\n" +
@@ -38,12 +37,12 @@ public class APILogic {
                         "}")
                 .when()
                 .post("https://reqres.in/api/users");
-        utilities.addResponseToDocument(documentEvidence, response);
+        utilities.addResponseToDocument(response);
         return response;
     }
 
     @Step("Update user with id {id} and name {name} and job {job}")
-    public Response updateUser(int id, String name, String job,Document documentEvidence) {
+    public Response updateUser(int id, String name, String job) {
         response = RestAssured.given()
                 .body("{\n" +
                         "    \"name\": \"" + name + "\",\n" +
@@ -51,15 +50,15 @@ public class APILogic {
                         "}")
                 .when()
                 .put("https://reqres.in/api/users/" + id);
-        utilities.addResponseToDocument(documentEvidence, response);
+        utilities.addResponseToDocument(response);
         return response;
     }
     @Step("Delete user with id {id}")
-    public Response deleteUser(int id,Document documentEvidence) {
+    public Response deleteUser(int id) {
         response = RestAssured.given()
                 .when()
                 .delete("https://reqres.in/api/users/" + id);
-        utilities.addResponseToDocument(documentEvidence, response);
+        utilities.addResponseToDocument(response);
         return response;
     }
 }

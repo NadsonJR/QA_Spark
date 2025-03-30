@@ -1,9 +1,6 @@
 package org.desafio.steps;
 
 import com.itextpdf.layout.Document;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.extern.log4j.Log4j2;
@@ -11,7 +8,7 @@ import org.desafio.config.CucumberHooks;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
 import org.desafio.utils.Utilities;
-import org.desafio.utils.DriverManager;
+
 
 
 import java.io.IOException;
@@ -37,18 +34,18 @@ public class ChekoutSteps {
         loginLogic.navigateTo("https://www.saucedemo.com");
     }
     @Given("Login on Swag Labs")
-    public void login_on_swag_labs() throws InterruptedException {
+    public void login_on_swag_labs() throws InterruptedException , IOException{
         loginLogic.enterUsername("standard_user", documentEvidence);
         loginLogic.enterPassword("secret_sauce", documentEvidence);
         loginLogic.clickLoginButton(documentEvidence);
         loginLogic.validateTitleProducts(documentEvidence);
     }
     @Given("Add the Sauce Bike Light to cart")
-    public void add_the_sauce_bike_light_to_cart() throws InterruptedException {
+    public void add_the_sauce_bike_light_to_cart() throws InterruptedException, IOException {
         homeLogic.addSauceBikeLightToCart(documentEvidence);
     }
     @Given("Checkout the product")
-    public void checkout_the_product() throws InterruptedException {
+    public void checkout_the_product() throws InterruptedException, IOException {
         homeLogic.openCart(documentEvidence);
         homeLogic.verifyCart(documentEvidence);
         homeLogic.clickCheckoutButton(documentEvidence);
@@ -57,7 +54,7 @@ public class ChekoutSteps {
     }
 
     @Then("Confirm the order")
-    public void confirm_the_order() throws InterruptedException {
+    public void confirm_the_order() throws InterruptedException, IOException {
         homeLogic.validateOverview(documentEvidence);
         homeLogic.clickFinishButton(documentEvidence);
         homeLogic.validateCompleteCheckout(documentEvidence);

@@ -2,6 +2,7 @@
 
 Feature: Checkout feature
 
+  @end-to-end
   Scenario: TC0004 - Buying Bike Light
     Given I open the Swag Labs
     And Login on Swag Labs
