@@ -1,3 +1,4 @@
+```markdown
 # Web Automation Project
 
 Automated testing project using Selenium WebDriver, Cucumber, Java, and K6 for load testing.
@@ -19,14 +20,14 @@ git clone [repository-url]
 ```
 
 2. Download Edge WebDriver:
-    - Go to [Microsoft Edge WebDriver Downloads](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
-    - Download the version that matches your Edge browser
-    - Extract the `msedgedriver.exe` to `C:\edgedriver_win64\`
+   - Go to [Microsoft Edge WebDriver Downloads](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+   - Download the version that matches your Edge browser
+   - Extract the `msedgedriver.exe` to `C:\edgedriver_win64\`
 
 3. Install K6:
-    - Windows: `winget install k6`
-    - MacOS: `brew install k6`
-    - Linux: Follow [K6 installation guide](https://k6.io/docs/get-started/installation/)
+   - Windows: `winget install k6`
+   - MacOS: `brew install k6`
+   - Linux: Follow [K6 installation guide](https://k6.io/docs/get-started/installation/)
 
 4. Install dependencies:
 ```bash
@@ -35,19 +36,34 @@ mvn clean install
 
 ## Project Structure
 ```
-src/
-├── test/
-│   ├── java/
-│   │   └── org/desafio/
-│   │       ├── logic/     # Test logic classes
-│   │       ├── pages/     # Page objects
-│   │       ├── runner/    # Test runner
-│   │       ├── steps/     # Step definitions
-│   │       └── utils/     # Utilities
-│   └── resources/
-│       └── org/desafio/features/  # Feature files
-└── load-tests/              # K6 load test scripts
-    └── test-script.js
+project-root/
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       └── com/desafio/
+│   │           ├── config/     # Configuration files
+│   │           ├── model/      # Domain models
+│   │           └── utils/      # Utility classes
+│   ├── test/
+│   │   ├── java/
+│   │   │   └── com/desafio/
+│   │   │       ├── logic/     # Test logic classes
+│   │   │       ├── pages/     # Page objects
+│   │   │       ├── runner/    # Test runner
+│   │   │       ├── steps/     # Step definitions
+│   │   │       └── utils/     # Test utilities
+│   │   └── resources/
+│   │       ├── features/      # Cucumber feature files
+│   │       ├── config/        # Test configuration
+│   │       └── log4j2.xml     # Logging configuration
+│   └── load-tests/           # K6 load test scripts
+│       └── test-script.js
+├── .github/
+│   └── workflows/
+│       └── maven.yml         # CI/CD configuration
+├── target/                   # Compiled output
+├── .gitignore
+└── pom.xml                  # Project dependencies
 ```
 
 ## Running Tests
@@ -86,7 +102,7 @@ Performance thresholds:
 
 ## Test Reports
 
-## Important
+### Important
 - Make sure you have run the tests before generating reports
 - To view the evidence of the executed tests, access the evidence folder.
 
