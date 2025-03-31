@@ -76,7 +76,7 @@ export function handleSummary(data) {
         thresholds: data.metrics.http_req_duration.thresholds,
     };
     return {
-        'report.html': htmlReport(data),
-        'summary.json': JSON.stringify(summary, null, 2),
+        'report/reportK6.html': htmlReport(data),
+        'report/summary.json': JSON.stringify(summary, null, 2),
     };
 }
