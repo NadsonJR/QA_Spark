@@ -34,7 +34,7 @@ jobs:
         run: mvn clean test
 
       - name: Run Load Tests with K6
-        run: k6 run load-tests/script.js || true  # Permite falhas sem quebrar o pipeline
+        run: k6 run src/load-tests/test-script.js || true  # Permite falhas sem quebrar o pipeline
 
       - name: Generate Allure Reports
         run: mvn allure:report
