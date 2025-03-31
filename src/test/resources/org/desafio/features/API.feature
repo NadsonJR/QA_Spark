@@ -25,3 +25,12 @@ Feature: API
     Scenario: TC0006 - Delete user
         Given I delete a user
         Then I should see the status code 204
+
+    @api-007
+    Scenario: TC0007 - Create Update Delete user
+        Given I create a user
+        Then I should see the status code 201
+        Given I update last created user
+        Then I should see the status code 200
+        Given I delete last created user
+        Then I should see the status code 204

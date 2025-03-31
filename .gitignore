@@ -37,5 +37,10 @@ build/
 ### Mac OS ###
 .DS_Store
 
+### evidencies ###
+/evidencias
+
 ### K6 Load Test Results ###
-load_test_results.json
+package-lock.json
+report.html
+summary.json

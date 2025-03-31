@@ -7,6 +7,7 @@ Feature: Example feature
     And I should see the title "Swag Labs"
     Then I should see the text "Login"
 
+  @Login002
   Scenario: TC0002 - Do login with success
     Given I open the login page
     And fill username input "standard_user"
@@ -14,6 +15,7 @@ Feature: Example feature
     And click on btn login
     Then Validate if user is logged in
 
+  @Login003
   Scenario: TC0003 - Do login with error
     Given I open the login page
     And fill username input "standard_user"

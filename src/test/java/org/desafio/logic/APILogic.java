@@ -3,10 +3,16 @@ package org.desafio.logic;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.desafio.config.BaseConfig;
 import org.desafio.utils.Utilities;
+import org.json.JSONObject;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class APILogic {
     private Response response;
+    private int lastCreatedUserId;
     private Utilities utilities;
 
     public APILogic() {
@@ -16,7 +22,7 @@ public class APILogic {
     public Response getUsers() {
         response = RestAssured.given()
                 .when()
-                .get("https://reqres.in/api/users");
+                .get(BaseConfig.API_BASE_URL);
         utilities.addResponseToDocument(response);
         return response;
     }
@@ -24,41 +30,56 @@ public class APILogic {
     public Response getUserById(int id) {
         response = RestAssured.given()
                 .when()
-                .get("https://reqres.in/api/users/" + id);
+                .get(BaseConfig.API_BASE_URL + id);
         utilities.addResponseToDocument(response);
         return response;
     }
     @Step("Create user with email {email} and password {password}")
     public Response createUser(String email, String password) {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("email", email);
+        requestBody.put("password", password);
         response = RestAssured.given()
-                .body("{\n" +
-                        "    \"email\": \"" + email + "\",\n" +
-                        "    \"password\": \"" + password + "\"\n" +
-                        "}")
+                .body(requestBody)
                 .when()
-                .post("https://reqres.in/api/users");
+                .post(BaseConfig.API_BASE_URL);
         utilities.addResponseToDocument(response);
+        if (response.getStatusCode() == 201) {
+            lastCreatedUserId = response.jsonPath().getInt("id");
+        }
         return response;
     }
 
     @Step("Update user with id {id} and name {name} and job {job}")
     public Response updateUser(int id, String name, String job) {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("name", name);
+        requestBody.put("job", job);
         response = RestAssured.given()
-                .body("{\n" +
-                        "    \"name\": \"" + name + "\",\n" +
-                        "    \"job\": \"" + job + "\"\n" +
-                        "}")
+                .body(requestBody)
                 .when()
-                .put("https://reqres.in/api/users/" + id);
+                .put(BaseConfig.API_BASE_URL + id);
         utilities.addResponseToDocument(response);
         return response;
+    }
+    @Step("Update last created user with name {name} and job {job}")
+    public Response updateLastCreatedUser(String name, String job) {
+        return response = updateUser(lastCreatedUserId, name, job);
     }
     @Step("Delete user with id {id}")
     public Response deleteUser(int id) {
         response = RestAssured.given()
                 .when()
-                .delete("https://reqres.in/api/users/" + id);
+                .delete(BaseConfig.API_BASE_URL + id);
         utilities.addResponseToDocument(response);
         return response;
+    }
+    @Step("Delete last created user")
+    public Response deleteLastCreatedUser() {
+        return response = deleteUser(lastCreatedUserId);
+    }
+    @Step("Validate status code {statusCode}")
+    public void validateStatusCode(int statusCode, Response response) {
+        assertThat(response.getStatusCode(), equalTo(statusCode));
     }
 }

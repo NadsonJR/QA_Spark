@@ -1,4 +1,4 @@
-package org.desafio.utils;
+package org.desafio.config;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -39,7 +39,10 @@ public class DriverManager {
         if (driver == null) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");
+            options.addArguments("--window-size=1280,720");
+            options.addArguments("--disable-gpu");
             driver = new ChromeDriver(options);
+            driver.manage().window().maximize();
 //            driver = new ChromeDriver();
         }
         return driver;

@@ -1,5 +1,4 @@
 package org.desafio.utils;
-
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -18,6 +17,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ public class Utilities {
         String scenarioName;
         String scenarioTag;
         String status;
-
         TestData() {
             screenshots = new ArrayList<>();
             apiResponses = new ArrayList<>();
@@ -93,11 +93,17 @@ public void takeScreenshot(WebDriver driver, String fileName, Document documentE
     public Document createDocumentPDF(String scenarioName, String scenarioTag) throws IOException {
         currentTest.scenarioName = scenarioName;
         currentTest.scenarioTag = scenarioTag;
+        int year = LocalDateTime.now().getYear();
+        int month = LocalDateTime.now().getMonthValue();
+        int day = LocalDateTime.now().getDayOfMonth();
         // Create evidencias directory if it doesn't exist
-        new File("evidencias").mkdirs();
+        Path folder = Paths.get("evidencias",String.valueOf(year),String.format("%02d", month), String.format("%02d", day));
+        new File(folder.toString()).mkdirs();
+        // Get current timestamp
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH-mm-ss"));
         // Create the actual document file path
-        String documentName = "evidencias/" + scenarioTag + "_" +
-                scenarioName.replaceAll("[^a-zA-Z0-9]", "_") + "_TestEvidence.pdf";
+        String documentName = folder +"/" + scenarioTag + "_" +
+                scenarioName.replaceAll("[^a-zA-Z0-9]", "_") + "_TestEvidence"+"_"+timestamp+".pdf";
         // Create and return the actual document
         return new Document(new PdfDocument(new PdfWriter(documentName)));
     }
@@ -109,16 +115,16 @@ public void takeScreenshot(WebDriver driver, String fileName, Document documentE
                             .setFontSize(16)
                             .setTextAlignment(TextAlignment.CENTER))
                     .add(new Paragraph("\nScenario: " + scenarioName)
-                            .setFontSize(12))
+                            .setFontSize(10))
                     .add(new Paragraph("Status: " + status)
-                            .setFontSize(12)
+                            .setFontSize(10)
                             .setFontColor(status.equals("PASSED") ? ColorConstants.GREEN : ColorConstants.RED)
                             .setDestination("status"))
                     .add(new Paragraph("Executed by: " + System.getProperty("user.name"))
-                            .setFontSize(12))
+                            .setFontSize(10))
                     .add(new Paragraph("Execution Time: " +
                             LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))
-                            .setFontSize(12))
+                            .setFontSize(10))
                     .add(new Paragraph("\n"));
         } catch (Exception e) {
             log.error("Error adding header to document", e);
@@ -183,7 +189,6 @@ public void takeScreenshot(WebDriver driver, String fileName, Document documentE
             String responseBody = response.getBody().asString();
             currentTest.apiResponses.add(new APIResponseInfo(stepName, statusCode, responseBody));
             log.info("API response added: " + stepName);
-
         } catch (Exception e) {
             log.error("Error adding API response", e);
         }

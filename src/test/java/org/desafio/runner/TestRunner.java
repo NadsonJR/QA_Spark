@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/org/desafio/features/",
         glue = {"org.desafio.steps", "org.desafio.config"},
         plugin = {"pretty", "html:target/cucumber-reports"},
-        tags= "@All",
+        tags= "@API",
         monochrome = true
 )
 public class TestRunner {

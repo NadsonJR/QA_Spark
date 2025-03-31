@@ -1,19 +1,15 @@
 package org.desafio.steps;
 
 import com.itextpdf.layout.Document;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.extern.log4j.Log4j2;
+import org.desafio.config.BaseConfig;
 import org.desafio.config.CucumberHooks;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
 import org.desafio.utils.Utilities;
-import org.desafio.utils.DriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
+import org.desafio.config.DriverManager;
 
 import java.io.IOException;
 @Log4j2
@@ -33,8 +29,8 @@ public class LoginSteps {
     }
 
     @Given("I open the login page")
-    public void i_open_the_login_page() throws InterruptedException {
-        loginLogic.navigateTo("https://www.saucedemo.com");
+    public void i_open_the_login_page(){
+        loginLogic.navigateTo(BaseConfig.BASE_URL);
     }
     @Then("I should see the title {string}")
     public void i_should_see_the_title(String expectedTitle) throws InterruptedException, IOException {

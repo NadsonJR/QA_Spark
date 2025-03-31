@@ -4,6 +4,7 @@ import com.itextpdf.layout.Document;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.extern.log4j.Log4j2;
+import org.desafio.config.BaseConfig;
 import org.desafio.config.CucumberHooks;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
@@ -31,7 +32,7 @@ public class ChekoutSteps {
 
     @Given("I open the Swag Labs")
     public void i_open_the_swag_labs() {
-        loginLogic.navigateTo("https://www.saucedemo.com");
+        loginLogic.navigateTo(BaseConfig.BASE_URL);
     }
     @Given("Login on Swag Labs")
     public void login_on_swag_labs() throws InterruptedException , IOException{

@@ -5,7 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.desafio.pages.LoginPage;
 import org.desafio.utils.Utilities;
 import org.desafio.pages.HomePage;
-import org.desafio.utils.DriverManager;
+import org.desafio.config.DriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
