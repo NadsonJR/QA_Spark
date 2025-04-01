@@ -41,7 +41,6 @@ public class LoginPage {
         WebElement loginBtn = driver.findElement(loginButton);
         loginBtn.click();
     }
-
     public void validateErroLoginMsg(){
         WebElement errorMsg = driver.findElement(errorLoginMsg);
         Assert.assertEquals(errorMsg.getText(),"Epic sadface: Username and password do not match any user in this service");
@@ -51,7 +50,6 @@ public class LoginPage {
         toast.isDisplayed();
         Assert.assertEquals("Login realizado com sucesso", toast.getText());
     }
-
     public void validateToastError(){
         WebElement toast = driver.findElement(By.xpath("//div[contains(@class,'Toastify__toast Toastify__toast-theme--light')]"));
         toast.isDisplayed();

@@ -49,7 +49,6 @@ public class APILogic {
         }
         return response;
     }
-
     @Step("Update user with id {id} and name {name} and job {job}")
     public Response updateUser(int id, String name, String job) {
         JSONObject requestBody = new JSONObject();

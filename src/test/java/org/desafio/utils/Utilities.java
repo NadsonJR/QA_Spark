@@ -4,9 +4,12 @@ import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import io.qameta.allure.Attachment;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
@@ -84,7 +87,6 @@ public void takeScreenshot(WebDriver driver, String fileName, Document documentE
         String stepName = fileName.split("\\.")[0];
         currentTest.screenshots.add(new ScreenshotInfo(stepName, tempPath));
         log.info("Screenshot added: " + tempPath);
-        log.info("Current screenshots count: " + currentTest.screenshots.size());
     } catch (Exception e) {
         log.error("Error in takeScreenshot", e);
         throw e;
@@ -109,23 +111,28 @@ public void takeScreenshot(WebDriver driver, String fileName, Document documentE
     }
     public void addHeaderToDocument(Document document, String scenarioName, String status) {
         try {
-            document.add(new Paragraph("\n"))
-                    .add(new Paragraph("Test Execution Evidence")
-                            .setUnderline().simulateBold()
-                            .setFontSize(16)
-                            .setTextAlignment(TextAlignment.CENTER))
-                    .add(new Paragraph("\nScenario: " + scenarioName)
-                            .setFontSize(10))
-                    .add(new Paragraph("Status: " + status)
-                            .setFontSize(10)
-                            .setFontColor(status.equals("PASSED") ? ColorConstants.GREEN : ColorConstants.RED)
-                            .setDestination("status"))
-                    .add(new Paragraph("Executed by: " + System.getProperty("user.name"))
-                            .setFontSize(10))
-                    .add(new Paragraph("Execution Time: " +
-                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))
-                            .setFontSize(10))
-                    .add(new Paragraph("\n"));
+            // Centered title
+            document.add(new Paragraph("Test Execution Evidence")
+                    .setUnderline()
+                    .setUnderline().simulateBold()
+                    .setFontSize(14)
+                    .setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph("\n"));
+            // Creating table
+            float[] columnWidths = { 150f, 300f }; // Define column widths
+            Table table = new Table(columnWidths);
+            table.setWidth(UnitValue.createPercentValue(100)); // Use full document width
+            // Adding cells (Headers)
+            table.addCell(new Cell().add(new Paragraph("Scenario:").setUnderline().simulateBold()).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.addCell(new Cell().add(new Paragraph(scenarioName)));
+            table.addCell(new Cell().add(new Paragraph("Status:").setUnderline().simulateBold()).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.addCell(new Cell().add(new Paragraph(status).setFontColor(status.equals("PASSED") ? ColorConstants.GREEN : ColorConstants.RED)));
+            table.addCell(new Cell().add(new Paragraph("Executed by:").setUnderline().simulateBold()).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.addCell(new Cell().add(new Paragraph(System.getProperty("user.name"))));
+            table.addCell(new Cell().add(new Paragraph("Execution Time:").setUnderline().simulateBold()).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.addCell(new Cell().add(new Paragraph(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))));
+            // Adding the table to the document
+            document.add(table);
         } catch (Exception e) {
             log.error("Error adding header to document", e);
         }
