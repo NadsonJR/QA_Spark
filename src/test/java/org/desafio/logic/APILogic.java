@@ -17,6 +17,7 @@ public class APILogic {
 
     public APILogic() {
         utilities = new Utilities();
+        BaseConfig.setupRestAssured();
     }
     @Step("Get users")
     public Response getUsers() {
