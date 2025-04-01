@@ -42,5 +42,5 @@ build/
 
 ### K6 Load Test Results ###
 package-lock.json
-report.html
+reportK6.html
 summary.json
