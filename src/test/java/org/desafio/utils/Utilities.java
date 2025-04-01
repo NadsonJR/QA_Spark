@@ -4,10 +4,7 @@ import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import io.qameta.allure.Attachment;
@@ -27,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.itextpdf.layout.borders.SolidBorder;
 
 @Log4j2
 public class Utilities {
@@ -111,17 +109,20 @@ public void takeScreenshot(WebDriver driver, String fileName, Document documentE
     }
     public void addHeaderToDocument(Document document, String scenarioName, String status) {
         try {
-            // Centered title
-            document.add(new Paragraph("Test Execution Evidence")
-                    .setUnderline()
-                    .setUnderline().simulateBold()
-                    .setFontSize(14)
-                    .setTextAlignment(TextAlignment.CENTER));
-            document.add(new Paragraph("\n"));
             // Creating table
             float[] columnWidths = { 150f, 300f }; // Define column widths
             Table table = new Table(columnWidths);
             table.setWidth(UnitValue.createPercentValue(100)); // Use full document width
+            // Adding cells (Headers)
+            Cell titleCell = new Cell(1, 2) // Célula que ocupa duas colunas
+                    .add(new Paragraph("Test Execution Evidence")
+                            .setUnderline()
+                            .simulateBold()
+                            .setFontSize(14)
+                            .setTextAlignment(TextAlignment.CENTER))
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setBackgroundColor(ColorConstants.LIGHT_GRAY);
+            table.addCell(titleCell);
             // Adding cells (Headers)
             table.addCell(new Cell().add(new Paragraph("Scenario:").setUnderline().simulateBold()).setBackgroundColor(ColorConstants.LIGHT_GRAY));
             table.addCell(new Cell().add(new Paragraph(scenarioName)));
@@ -152,15 +153,45 @@ public void takeScreenshot(WebDriver driver, String fileName, Document documentE
                     document.add(new Paragraph("\n"));
                 }
             }
+            int screenshotCount = 0;
             // Add screenshots to existing document
             for (ScreenshotInfo screenshot : currentTest.screenshots) {
                 try {
                     File imageFile = new File(screenshot.tempPath);
                     if (imageFile.exists()) {
-                        document.add(new Paragraph("Step: " + screenshot.stepName));
+                        if (screenshotCount > 0 && screenshotCount % 2 == 0) {
+                            document.add(new AreaBreak());
+                        }
+                        screenshotCount++;
+                        // Create a div that contains both the step text and the image
+                        Div stepDiv = new Div();
+
+                        // adding the step text
+                        Paragraph stepText = new Paragraph("Step: " + screenshot.stepName)
+                                .setNeutralRole().simulateBold()
+                                .setMarginBottom(2);
+                        stepDiv.add(stepText);
+
+                        // Create and configure the image with border
                         Image image = new Image(ImageDataFactory.create(screenshot.tempPath));
-                        document.add(image);
-                        document.add(new Paragraph("\n"));
+
+                        // Calculate available document width (considering margins)
+                        float docWidth = document.getPdfDocument().getDefaultPageSize().getWidth() -
+                                document.getLeftMargin() - document.getRightMargin();
+
+                        // Set minimum width and apply configurations
+                        float minWidth = 300f;
+                        image.setAutoScale(true)
+                                .setWidth(Math.max(minWidth, docWidth))
+                                .setMaxWidth(UnitValue.createPercentValue(100))
+                                .setBorder(new SolidBorder(ColorConstants.BLACK, 1f))
+                                .setMarginTop(2)
+                                .setMarginBottom(10);
+
+                        // Adding the image to the div
+                        stepDiv.add(image);
+                        // Add the div to the document
+                        document.add(stepDiv);
                     }
                 } catch (Exception e) {
                     log.error("Error adding screenshot: " + screenshot.tempPath, e);
