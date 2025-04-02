@@ -12,6 +12,7 @@ import io.qameta.allure.Attachment;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
+import org.desafio.config.BaseConfig;
 import org.openqa.selenium.*;
 import java.io.File;
 import java.io.IOException;
@@ -104,7 +105,7 @@ public class Utilities {
                 log.info("Temp directory created: " + created);
             }
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            String tempPath = TEMP_DIR + UUID.randomUUID() + "_" + fileName;
+            String tempPath = TEMP_DIR + UUID.randomUUID() + "_" + fileName + BaseConfig.SCREENSHOT_TYPE;
             File tempFile = new File(tempPath);
             FileUtils.copyFile(screenshot, tempFile);
             String stepName = fileName.split("\\.")[0];

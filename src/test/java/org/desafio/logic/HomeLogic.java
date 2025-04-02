@@ -26,58 +26,69 @@ public class HomeLogic {
     public void addSauceBikeLightToCart() throws InterruptedException, IOException {
         step = "Add the Sauce Bike Light to cart";
         log.info(step);
-        homePage.addSauceBikeLightToCart();
-        utilities.takeScreenshot(driver, step + ".png");
+        homePage.addSauceBikeLightToCart(step);
         step = "Validate the remove button";
-        utilities.HighlightElementScreenshot(driver, homePage.validateRemoveBtn(), step + ".png");
+        log.info(step);
+        homePage.validateRemoveBtn(step);
         step = "Validate the cart";
-        utilities.HighlightElementScreenshot(driver, homePage.validateCart(), step + ".png");
+        log.info(step);
+        homePage.validateCart(step);
     }
     @Step("Open the cart")
     public void openCart() throws InterruptedException, IOException {
         step = "Open the cart";
         log.info(step);
-        homePage.openCart();
-        utilities.takeScreenshot(driver, step + ".png");
+        homePage.openCart(step);
     }
     @Step("Verify the cart")
     public void verifyCart() throws InterruptedException, IOException {
-        step = "Verify the cart";
+        step = "Verify the cart product";
         log.info(step);
-        utilities.HighlightElementScreenshot(driver, homePage.verifyCart(), step + ".png");
+        homePage.verifyCartElement(step);
+        step= "Verify the cart description";
+        log.info(step);
+        homePage.verifyItemDescription(step);
+        step = "Verify the cart price";
+        log.info(step);
+        homePage.verifyItemCartPriceElement(step);
+
     }
     @Step("Click on Checkout button")
     public void clickCheckoutButton() throws InterruptedException, IOException {
         step = "Click on Checkout button";
         log.info(step);
-        homePage.clickCheckoutButton();
-        utilities.takeScreenshot(driver, step + ".png");
+        homePage.clickCheckoutButton(step);
     }
     @Step("Fill zip form")
     public void fillZipForm() throws InterruptedException, IOException {
         step = "Fill zip form";
         log.info(step);
-        utilities.HighlightElementScreenshot(driver, homePage.fillZipForm(), step + ".png");
+        homePage.fillZipForm(step);
     }
     @Step("Click on continue button")
     public void clickContinueButton() throws InterruptedException, IOException {
         step = "Click on continue button";
         log.info(step);
-        homePage.clickContinueButton();
-        utilities.takeScreenshot(driver, step + ".png");
+        homePage.clickContinueButton(step);
     }
     @Step("Validate the overview")
     public void validateOverview() throws InterruptedException, IOException {
-        step = "Validate the overview";
+        step = "Validate Cart element is present";
         log.info(step);
-        utilities.HighlightElementScreenshot(driver, homePage.validateOverview(), step + ".png");
+        homePage.verifyCartElement(step);
+        step = "Validate Item Description is present";
+        log.info(step);
+        homePage.verifyItemDescription(step);
+        step = "Validate Prices is present";
+        log.info(step);
+        homePage.validatePrices();
+
     }
     @Step("Click on finish button")
     public void clickFinishButton() throws InterruptedException, IOException {
         step = "Click on finish button";
         log.info(step);
-        homePage.clickFinishButton();
-        utilities.takeScreenshot(driver, step + ".png");
+        homePage.clickFinishButton(step);
     }
 
     @Step("Validate the complete checkout")
@@ -85,7 +96,6 @@ public class HomeLogic {
         step = "Validate the complete checkout";
         log.info(step);
         homePage.validateCompleteCheckout();
-        utilities.HighlightElementScreenshot(driver, homePage.validateCompleteCheckout(), step + ".png");
     }
 
 }

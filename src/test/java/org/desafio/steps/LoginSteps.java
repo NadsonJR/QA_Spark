@@ -21,7 +21,7 @@ public class LoginSteps {
     }
 
     @Given("I open the login page")
-    public void i_open_the_login_page(){
+    public void i_open_the_login_page() throws IOException, InterruptedException {
         loginLogic.navigateTo(BaseConfig.BASE_URL);
     }
     @Then("I should see the title {string}")

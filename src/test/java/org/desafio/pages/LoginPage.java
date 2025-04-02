@@ -1,11 +1,14 @@
 package org.desafio.pages;
 
+import lombok.extern.log4j.Log4j2;
 import org.desafio.utils.Utilities;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+@Log4j2
 public class LoginPage {
 
     private WebDriver driver;
@@ -24,49 +27,66 @@ public class LoginPage {
         utilities = new Utilities();
     }
 
+    public void navigateTo(String url, String step) throws IOException, InterruptedException {
+        driver.get(url);
+        driver.manage().window().maximize();
+    }
+
     // Page actions
     public void enterEmail(String email) {
         WebElement emailElement = driver.findElement(emailInput);
         emailElement.clear();
         emailElement.sendKeys(email);
-
     }
-    public WebElement enterUsername(String username) {
+
+    public void enterUsername(String username, String step) {
         WebElement usernameElement = driver.findElement(usernameInput);
         usernameElement.clear();
         usernameElement.sendKeys(username);
-        return usernameElement;
+        utilities.HighlightElementScreenshot(driver, usernameElement, step);
     }
-    public WebElement enterPassword(String password) {
+    public void enterPassword(String password, String step) {
         WebElement passwordElement = driver.findElement(passwordInput);
         passwordElement.clear();
         passwordElement.sendKeys(password);
-        return passwordElement;
+        utilities.HighlightElementScreenshot(driver, passwordElement, step);
     }
-    public void clickLoginButton() {
+    public void clickLoginButton(String step) {
         WebElement loginBtn = driver.findElement(loginButton);
+        utilities.HighlightElementScreenshot(driver, loginBtn, step);
         loginBtn.click();
     }
-    public WebElement validateErroLoginMsg(){
+    public void validateErroLoginMsg(String step){
         WebElement errorMsg = driver.findElement(errorLoginMsg);
+        utilities.HighlightElementScreenshot(driver, errorMsg, step);
         Assert.assertEquals(errorMsg.getText(),"Epic sadface: Username and password do not match any user in this service");
-        return errorMsg;
     }
-    public void validateToastSuccess(){
-        WebElement toast = driver.findElement(By.xpath("//div[contains(@class,'Toastify__toast Toastify__toast-theme--light')]"));
-        toast.isDisplayed();
-        Assert.assertEquals("Login realizado com sucesso", toast.getText());
-    }
-    public void validateToastError(){
-        WebElement toast = driver.findElement(By.xpath("//div[contains(@class,'Toastify__toast Toastify__toast-theme--light')]"));
-        toast.isDisplayed();
-        Assert.assertEquals("Erro ao realizar login: Verifique se o login e a senha estão corretos", toast.getText());
-    }
+
     public String getPageTitle() {
         return driver.getTitle();
     }
 
-    public boolean isTextPresent(String text) {
-        return driver.getPageSource().contains(text);
+    public void isTextPresent(String text, String step) throws IOException, InterruptedException {
+        if (driver.getPageSource().contains(text)) {
+            log.info("Text is present");
+            utilities.takeScreenshot(driver, step);
+        } else {
+            log.error("Text is not present");
+            utilities.takeScreenshot(driver, step);
+            Assert.fail("Text is not present");
+        }
+
+    }
+
+    public void validateTitlePage(String expectedTitle,String step) throws IOException, InterruptedException {
+        String actualTitle = getPageTitle();
+        if (actualTitle.equals(expectedTitle)) {
+            log.info("Title is correct");
+            utilities.takeScreenshot(driver, "Title is correct");
+        } else {
+            log.error("Title is incorrect");
+            utilities.takeScreenshot(driver, "Title is incorrect");
+            Assert.fail("Title is incorrect");
+        }
     }
 }

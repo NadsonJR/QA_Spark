@@ -25,7 +25,7 @@ public class ChekoutSteps {
     }
 
     @Given("I open the Swag Labs")
-    public void i_open_the_swag_labs() {
+    public void i_open_the_swag_labs() throws IOException, InterruptedException {
         loginLogic.navigateTo(BaseConfig.BASE_URL);
     }
     @Given("Login on Swag Labs")

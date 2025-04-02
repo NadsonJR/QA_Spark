@@ -2,6 +2,7 @@ package org.desafio.pages;
 
 import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
+import org.desafio.utils.Utilities;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebElement;
 public class HomePage {
     private WebDriver driver;
     private Faker faker = new Faker();
+    private Utilities utilities;
     private String ItemCartDescription = "A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included.";
 
     // Web elements
@@ -37,73 +39,86 @@ public class HomePage {
 
     // Constructor
     public HomePage(WebDriver driver) {
+        utilities = new Utilities();
         this.driver = driver;
     }
 
     // Page actions
-    public WebElement validateLogin() {
+    public void validateLogin(String step) {
         WebElement homePageTitleElement = driver.findElement(homePageTitle);
+        utilities .HighlightElementScreenshot(driver, homePageTitleElement, step);
         Assert.assertEquals(homePageTitleElement.getText(),"Products");
-        return homePageTitleElement;
     }
-    public WebElement addSauceBikeLightToCart() throws InterruptedException {
+    public void addSauceBikeLightToCart(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement btnAddCartBikeLight = driver.findElement(sauceBikeLightBtnAddCart);
+        utilities.HighlightElementScreenshot(driver, btnAddCartBikeLight, step);
         btnAddCartBikeLight.click();
-        return btnAddCartBikeLight;
     }
 
-    public WebElement validateRemoveBtn() throws InterruptedException {
+    public void validateRemoveBtn(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement removeBtnBikeLightElement = driver.findElement(removeBtnBikeLight);
+        utilities.HighlightElementScreenshot(driver, removeBtnBikeLightElement, step);
         Assert.assertEquals(removeBtnBikeLightElement.getText(),"Remove");
-        return removeBtnBikeLightElement;
     }
 
-    public WebElement validateCart() throws InterruptedException {
+    public void validateCart(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(cart);
+        utilities.HighlightElementScreenshot(driver, cartElement, step);
         Assert.assertEquals(cartElement.getText(),"1");
-        return cartElement;
     }
-    public void openCart() throws InterruptedException {
+    public void openCart(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(cartIcon);
+        utilities.HighlightElementScreenshot(driver, cartElement, step);
         cartElement.click();
     }
-    public WebElement verifyCart() throws InterruptedException {
-        Thread.sleep(2000);
+
+    public void verifyCartElement(String step){
         WebElement cartElement = driver.findElement(itemCart);
-        WebElement itemCartDescriptionElement = driver.findElement(itemCartDescription);
-        WebElement itemCartPriceElement = driver.findElement(itemCartPrice);
         if(cartElement.getText().contains("Sauce Labs Bike Light")){
             log.info("The product is in the cart");
+            utilities.HighlightElementScreenshot(driver, cartElement, step);
         }else{
             log.error("The product is not in the cart");
+            utilities.HighlightElementScreenshot(driver, cartElement, step);
             Assert.fail("The product is not in the cart");
         }
+    }
+    public void verifyItemDescription(String step){
+        WebElement itemCartDescriptionElement = driver.findElement(itemCartDescription);
         if (itemCartDescriptionElement.getText().contains(ItemCartDescription)){
             log.info("The product description is correct");
+            utilities.HighlightElementScreenshot(driver, itemCartDescriptionElement, step);
         }else{
             log.error("The product description is not correct");
+            utilities.HighlightElementScreenshot(driver, itemCartDescriptionElement, step);
             Assert.fail("The product description is not correct");
         }
-        if (itemCartPriceElement.getText().contains("$9.99")){
-            log.info("The product price is correct");
-        }else{
-            log.error("The product price is not correct");
-            Assert.fail("The product price is not correct");
-        }
-        return cartElement;
     }
 
-    public void clickCheckoutButton() throws InterruptedException {
+    public void verifyItemCartPriceElement(String step){
+        WebElement itemCartPriceElement = driver.findElement(itemCartPrice);
+        if (itemCartPriceElement.getText().contains("$9.99")){
+            log.info("The product price is correct");
+            utilities.HighlightElementScreenshot(driver, itemCartPriceElement, step);
+        }else{
+            log.error("The product price is not correct");
+            utilities.HighlightElementScreenshot(driver, itemCartPriceElement, step);
+            Assert.fail("The product price is not correct");
+        }
+    }
+
+    public void clickCheckoutButton(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement checkoutBtnElement = driver.findElement(checkoutBtn);
+        utilities.HighlightElementScreenshot(driver, checkoutBtnElement, step);
         checkoutBtnElement.click();
     }
 
-    public WebElement fillZipForm() throws InterruptedException {
+    public void fillZipForm(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement zipFormElement = driver.findElement(zipForm);
         WebElement firstNameElement = driver.findElement(firstName);
@@ -112,37 +127,23 @@ public class HomePage {
         lastNameElement.sendKeys(faker.name().lastName());
         WebElement zipElement = driver.findElement(postalCode);
         zipElement.sendKeys(faker.address().zipCode());
-        return zipFormElement;
+        utilities.HighlightElementScreenshot(driver, zipFormElement, step);
     }
 
-    public void clickContinueButton() throws InterruptedException {
+    public void clickContinueButton(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement continueBtnElement = driver.findElement(continueBtn);
+        utilities.HighlightElementScreenshot(driver, continueBtnElement, step);
         continueBtnElement.click();
     }
 
-    public WebElement validateOverview() throws InterruptedException {
-        Thread.sleep(2000);
-        WebElement cartElement = driver.findElement(itemCart);
-        WebElement itemCartDescriptionElement = driver.findElement(itemCartDescription);
-        if(cartElement.getText().contains("Sauce Labs Bike Light")){
-            log.info("The product is in the cart");
-        }else{
-            log.error("The product is not in the cart");
-            Assert.fail("The product is not in the cart");
-        }
-        if (itemCartDescriptionElement.getText().contains(ItemCartDescription)){
-            log.info("The product description is correct");
-        }else{
-            log.error("The product description is not correct");
-            Assert.fail("The product description is not correct");
-        }
+    public void validateOverview(String step) throws InterruptedException {
         validatePrices();
-        return cartElement;
     }
-    public void clickFinishButton() throws InterruptedException {
+    public void clickFinishButton(String step) throws InterruptedException {
         Thread.sleep(2000);
         WebElement finishBtnElement = driver.findElement(finishBtn);
+        utilities.HighlightElementScreenshot(driver, finishBtnElement, step);
         finishBtnElement.click();
     }
 
@@ -175,39 +176,55 @@ public class HomePage {
 
         if (itemTotalValue == expectedItemTotal){
             log.info("The item total price is correct");
+            utilities.HighlightElementScreenshot(driver, driver.findElement(itemTotalPrice),
+                    "The item total price is correct");
         }else{
             log.error("The item total price is not correct");
+            utilities.HighlightElementScreenshot(driver, driver.findElement(itemTotalPrice),
+                    "The item total price is not correct");
             Assert.fail("The item total price is not correct");
         }
         if (taxValue == expectedTax){
             log.info("The tax price is correct");
+            utilities.HighlightElementScreenshot(driver, driver.findElement(taxPrice),
+                    "The tax price is correct");
         }else{
             log.error("The tax price is not correct");
+            utilities.HighlightElementScreenshot(driver, driver.findElement(taxPrice),
+                    "The tax price is not correct");
             Assert.fail("The tax price is not correct");
         }
         if (totalValue == expectedTotal){
             log.info("The total price is correct");
+            utilities.HighlightElementScreenshot(driver, driver.findElement(totalPrice),
+                    "The total price is correct");
         }else{
             log.error("The total price is not correct");
+            utilities.HighlightElementScreenshot(driver, driver.findElement(totalPrice),
+                    "The total price is not correct");
             Assert.fail("The total price is not correct");
         }
     }
-    public WebElement validateCompleteCheckout() throws InterruptedException {
+
+    public void validateCompleteCheckout() throws InterruptedException {
         Thread.sleep(2000);
         WebElement completeCheckoutElement = driver.findElement(completeCheckout);
         WebElement completeCheckoutDescriptionElement = driver.findElement(completeCheckoutDescription);
         if(completeCheckoutElement.getText().contains("Thank you for your order!")){
             log.info("The order was completed");
+            utilities.HighlightElementScreenshot(driver, completeCheckoutElement,"The order was completed");
         }else{
             log.error("The order was not completed");
+            utilities.HighlightElementScreenshot(driver, completeCheckoutElement, "The order was not completed");
             Assert.fail("The order was not completed");
         }
         if (completeCheckoutDescriptionElement.getText().contains("Your order has been dispatched, and will arrive just as fast as the pony can get there!")){
             log.info("The order description is correct");
+            utilities.HighlightElementScreenshot(driver, completeCheckoutDescriptionElement, "The order description is correct");
         }else{
             log.error("The order description is not correct");
+            utilities.HighlightElementScreenshot(driver, completeCheckoutDescriptionElement, "The order description is not correct");
             Assert.fail("The order description is not correct");
         }
-        return completeCheckoutElement;
     }
 }
