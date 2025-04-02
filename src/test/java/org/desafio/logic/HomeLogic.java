@@ -28,7 +28,9 @@ public class HomeLogic {
         log.info(step);
         homePage.addSauceBikeLightToCart();
         utilities.takeScreenshot(driver, step + ".png");
+        step = "Validate the remove button";
         utilities.HighlightElementScreenshot(driver, homePage.validateRemoveBtn(), step + ".png");
+        step = "Validate the cart";
         utilities.HighlightElementScreenshot(driver, homePage.validateCart(), step + ".png");
     }
     @Step("Open the cart")
