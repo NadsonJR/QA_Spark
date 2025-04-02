@@ -1,5 +1,6 @@
 package org.desafio.pages;
 
+import org.desafio.utils.Utilities;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,10 +16,12 @@ public class LoginPage {
     private By loginButton = By.id("login-button");
     private By usernameInput = By.id("user-name");
     private By errorLoginMsg = By.xpath("//div//h3[@data-test=\"error\"]");
+    private Utilities utilities;
 
     // Constructor
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        utilities = new Utilities();
     }
 
     // Page actions
@@ -26,24 +29,28 @@ public class LoginPage {
         WebElement emailElement = driver.findElement(emailInput);
         emailElement.clear();
         emailElement.sendKeys(email);
+
     }
-    public void enterUsername(String username) {
+    public WebElement enterUsername(String username) {
         WebElement usernameElement = driver.findElement(usernameInput);
         usernameElement.clear();
         usernameElement.sendKeys(username);
+        return usernameElement;
     }
-    public void enterPassword(String password) {
+    public WebElement enterPassword(String password) {
         WebElement passwordElement = driver.findElement(passwordInput);
         passwordElement.clear();
         passwordElement.sendKeys(password);
+        return passwordElement;
     }
     public void clickLoginButton() {
         WebElement loginBtn = driver.findElement(loginButton);
         loginBtn.click();
     }
-    public void validateErroLoginMsg(){
+    public WebElement validateErroLoginMsg(){
         WebElement errorMsg = driver.findElement(errorLoginMsg);
         Assert.assertEquals(errorMsg.getText(),"Epic sadface: Username and password do not match any user in this service");
+        return errorMsg;
     }
     public void validateToastSuccess(){
         WebElement toast = driver.findElement(By.xpath("//div[contains(@class,'Toastify__toast Toastify__toast-theme--light')]"));

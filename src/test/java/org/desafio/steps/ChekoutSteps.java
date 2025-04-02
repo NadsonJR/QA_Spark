@@ -8,9 +8,6 @@ import org.desafio.config.BaseConfig;
 import org.desafio.config.CucumberHooks;
 import org.desafio.logic.HomeLogic;
 import org.desafio.logic.LoginLogic;
-import org.desafio.utils.Utilities;
-
-
 
 import java.io.IOException;
 
@@ -20,11 +17,8 @@ public class ChekoutSteps {
     private Document documentEvidence;
     private HomeLogic homeLogic;
     private LoginLogic loginLogic;
-    private Utilities utilities;
-    private String scenarioName;
 
     public ChekoutSteps()  {
-        utilities = new Utilities();
         homeLogic = new HomeLogic();
         loginLogic = new LoginLogic();
         documentEvidence = CucumberHooks.getDocumentEvidence();
@@ -36,29 +30,29 @@ public class ChekoutSteps {
     }
     @Given("Login on Swag Labs")
     public void login_on_swag_labs() throws InterruptedException , IOException{
-        loginLogic.enterUsername("standard_user", documentEvidence);
-        loginLogic.enterPassword("secret_sauce", documentEvidence);
-        loginLogic.clickLoginButton(documentEvidence);
-        loginLogic.validateTitleProducts(documentEvidence);
+        loginLogic.enterUsername("standard_user");
+        loginLogic.enterPassword("secret_sauce");
+        loginLogic.clickLoginButton();
+        loginLogic.validateTitleProducts();
     }
     @Given("Add the Sauce Bike Light to cart")
     public void add_the_sauce_bike_light_to_cart() throws InterruptedException, IOException {
-        homeLogic.addSauceBikeLightToCart(documentEvidence);
+        homeLogic.addSauceBikeLightToCart();
     }
     @Given("Checkout the product")
     public void checkout_the_product() throws InterruptedException, IOException {
-        homeLogic.openCart(documentEvidence);
-        homeLogic.verifyCart(documentEvidence);
-        homeLogic.clickCheckoutButton(documentEvidence);
-        homeLogic.fillZipForm(documentEvidence);
-        homeLogic.clickContinueButton(documentEvidence);
+        homeLogic.openCart();
+        homeLogic.verifyCart();
+        homeLogic.clickCheckoutButton();
+        homeLogic.fillZipForm();
+        homeLogic.clickContinueButton();
     }
 
     @Then("Confirm the order")
     public void confirm_the_order() throws InterruptedException, IOException {
-        homeLogic.validateOverview(documentEvidence);
-        homeLogic.clickFinishButton(documentEvidence);
-        homeLogic.validateCompleteCheckout(documentEvidence);
+        homeLogic.validateOverview();
+        homeLogic.clickFinishButton();
+        homeLogic.validateCompleteCheckout();
     }
 
 

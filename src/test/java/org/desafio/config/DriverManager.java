@@ -1,14 +1,9 @@
 package org.desafio.config;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +23,7 @@ public class DriverManager {
     public static void addDriver(WebDriver driver) {
         drivers.add(driver);
     }
-    public static void quitAllDrivers() {
-        for (WebDriver driver : drivers) {
-            if (driver != null) {
-                driver.quit();
-            }
-        }
-    }
+
     public static WebDriver getDriver() {
         if (driver == null) {
             ChromeOptions options = new ChromeOptions();
@@ -46,9 +35,5 @@ public class DriverManager {
 //            driver = new ChromeDriver();
         }
         return driver;
-    }
-    public void waitForElementToBeVisible(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 }

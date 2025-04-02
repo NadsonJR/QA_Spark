@@ -7,8 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.nio.Buffer;
-
 @Log4j2
 public class HomePage {
     private WebDriver driver;
@@ -25,6 +23,7 @@ public class HomePage {
     private By itemCartPrice = By.xpath("//div[@class='inventory_item_price']");
     private By cartIcon = By.xpath("//div//a[@class='shopping_cart_link']");
     private By checkoutBtn = By.id("checkout");
+    private By zipForm = By.xpath("//div[@class='checkout_info']");
     private By firstName = By.id("first-name");
     private By firstLast = By.id("last-name");
     private By postalCode = By.id("postal-code");
@@ -42,29 +41,37 @@ public class HomePage {
     }
 
     // Page actions
-    public void validateLogin() {
+    public WebElement validateLogin() {
         WebElement homePageTitleElement = driver.findElement(homePageTitle);
         Assert.assertEquals(homePageTitleElement.getText(),"Products");
+        return homePageTitleElement;
     }
-    public void addSauceBikeLightToCart() throws InterruptedException {
+    public WebElement addSauceBikeLightToCart() throws InterruptedException {
         Thread.sleep(2000);
         WebElement btnAddCartBikeLight = driver.findElement(sauceBikeLightBtnAddCart);
         btnAddCartBikeLight.click();
-        WebElement removeBtnBikeLightElement = driver.findElement(removeBtnBikeLight);
-        removeBtnBikeLightElement.isDisplayed();
+        return btnAddCartBikeLight;
     }
 
-    public void validateCart() throws InterruptedException {
+    public WebElement validateRemoveBtn() throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement removeBtnBikeLightElement = driver.findElement(removeBtnBikeLight);
+        Assert.assertEquals(removeBtnBikeLightElement.getText(),"Remove");
+        return removeBtnBikeLightElement;
+    }
+
+    public WebElement validateCart() throws InterruptedException {
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(cart);
         Assert.assertEquals(cartElement.getText(),"1");
+        return cartElement;
     }
     public void openCart() throws InterruptedException {
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(cartIcon);
         cartElement.click();
     }
-    public void verifyCart() throws InterruptedException {
+    public WebElement verifyCart() throws InterruptedException {
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(itemCart);
         WebElement itemCartDescriptionElement = driver.findElement(itemCartDescription);
@@ -87,6 +94,7 @@ public class HomePage {
             log.error("The product price is not correct");
             Assert.fail("The product price is not correct");
         }
+        return cartElement;
     }
 
     public void clickCheckoutButton() throws InterruptedException {
@@ -95,14 +103,16 @@ public class HomePage {
         checkoutBtnElement.click();
     }
 
-    public void fillZipForm() throws InterruptedException {
+    public WebElement fillZipForm() throws InterruptedException {
         Thread.sleep(2000);
+        WebElement zipFormElement = driver.findElement(zipForm);
         WebElement firstNameElement = driver.findElement(firstName);
         firstNameElement.sendKeys(faker.name().firstName());
         WebElement lastNameElement = driver.findElement(firstLast);
         lastNameElement.sendKeys(faker.name().lastName());
         WebElement zipElement = driver.findElement(postalCode);
         zipElement.sendKeys(faker.address().zipCode());
+        return zipFormElement;
     }
 
     public void clickContinueButton() throws InterruptedException {
@@ -111,7 +121,7 @@ public class HomePage {
         continueBtnElement.click();
     }
 
-    public void validateOverview() throws InterruptedException {
+    public WebElement validateOverview() throws InterruptedException {
         Thread.sleep(2000);
         WebElement cartElement = driver.findElement(itemCart);
         WebElement itemCartDescriptionElement = driver.findElement(itemCartDescription);
@@ -128,6 +138,7 @@ public class HomePage {
             Assert.fail("The product description is not correct");
         }
         validatePrices();
+        return cartElement;
     }
     public void clickFinishButton() throws InterruptedException {
         Thread.sleep(2000);
@@ -181,7 +192,7 @@ public class HomePage {
             Assert.fail("The total price is not correct");
         }
     }
-    public void validateCompleteCheckout() throws InterruptedException {
+    public WebElement validateCompleteCheckout() throws InterruptedException {
         Thread.sleep(2000);
         WebElement completeCheckoutElement = driver.findElement(completeCheckout);
         WebElement completeCheckoutDescriptionElement = driver.findElement(completeCheckoutDescription);
@@ -197,5 +208,6 @@ public class HomePage {
             log.error("The order description is not correct");
             Assert.fail("The order description is not correct");
         }
+        return completeCheckoutElement;
     }
 }

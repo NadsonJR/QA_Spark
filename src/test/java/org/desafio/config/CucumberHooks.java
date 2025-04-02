@@ -35,7 +35,7 @@ public class CucumberHooks {
     @After(order = 1)
     public void tearDown(Scenario scenario) throws IOException {
         String status = scenario.isFailed() ? "FAILED" : "PASSED";
-        utilities.generateDocumentPDF(documentEvidence, scenarioName, status);
+        utilities.generateDocumentPDF(documentEvidence, status);
         if (!scenarioTags.contains("API")){
             DriverManager.quitDriver();
         }
