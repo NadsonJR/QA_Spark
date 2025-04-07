@@ -20,30 +20,30 @@ public class APILogic {
         BaseConfig.setupRestAssured();
     }
     @Step("Get users")
-    public Response getUsers() {
+    public Response getBase(String resource) {
         response = RestAssured.given()
                 .when()
-                .get(BaseConfig.API_BASE_URL);
+                .get(BaseConfig.API_BASE_URL+ resource);
         utilities.addResponseToDocument(response);
         return response;
     }
     @Step("Get user by id {id}")
-    public Response getUserById(int id) {
+    public Response getUserById(String resource ,int id) {
         response = RestAssured.given()
                 .when()
-                .get(BaseConfig.API_BASE_URL + id);
+                .get(BaseConfig.API_BASE_URL + resource+"/"+id);
         utilities.addResponseToDocument(response);
         return response;
     }
     @Step("Create user with email {email} and password {password}")
-    public Response createUser(String email, String password) {
+    public Response createUser(String route ,String email, String password) {
         JSONObject requestBody = new JSONObject();
         requestBody.put("email", email);
         requestBody.put("password", password);
         response = RestAssured.given()
                 .body(requestBody)
                 .when()
-                .post(BaseConfig.API_BASE_URL);
+                .post(BaseConfig.API_BASE_URL+ route);
         utilities.addResponseToDocument(response);
         if (response.getStatusCode() == 201) {
             lastCreatedUserId = response.jsonPath().getInt("id");

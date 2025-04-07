@@ -46,7 +46,7 @@ public class HomePage {
     // Page actions
     public void validateLogin(String step) {
         WebElement homePageTitleElement = driver.findElement(homePageTitle);
-        utilities .HighlightElementScreenshot(driver, homePageTitleElement, step);
+        utilities.HighlightElementScreenshot(driver, homePageTitleElement, step);
         Assert.assertEquals(homePageTitleElement.getText(),"Products");
     }
     public void addSauceBikeLightToCart(String step) throws InterruptedException {
