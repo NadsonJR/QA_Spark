@@ -8,12 +8,15 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.desafio.config.BaseConfig;
 import org.openqa.selenium.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -67,11 +70,6 @@ public class Utilities {
         }
     }
 
-    @Attachment(value = "Screenshot", type = "image/png")
-    public byte[] takeScreenshot(WebDriver driver) {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-    }
-
     public void HighlightElementScreenshot(WebDriver driver, WebElement element, String fileName) {
         try {
             // Save the original border style
@@ -90,6 +88,12 @@ public class Utilities {
         } catch (Exception e) {
             log.error("Erro ao destacar elemento", e);
         }
+    }
+
+    // This method attaches a screenshot to the Allure report
+    public static void attachPageScreenshot(WebDriver webDriver, String stepName) {
+        byte[] screenshotBytes = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+        Allure.attachment(stepName, new ByteArrayInputStream(screenshotBytes));
     }
 
     public void takeScreenshot(WebDriver driver, String fileName) throws IOException, InterruptedException {
@@ -111,6 +115,7 @@ public class Utilities {
             String stepName = fileName.split("\\.")[0];
             currentTest.screenshots.add(new ScreenshotInfo(stepName, tempPath));
             log.info("Screenshot added: " + tempPath);
+            attachPageScreenshot(driver, stepName);
         } catch (Exception e) {
             log.error("Error in takeScreenshot", e);
             throw e;
