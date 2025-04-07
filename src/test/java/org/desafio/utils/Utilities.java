@@ -8,12 +8,15 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.desafio.config.BaseConfig;
 import org.openqa.selenium.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -51,7 +54,6 @@ public class Utilities {
         TestData() {
             screenshots = new ArrayList<>();
             apiResponses = new ArrayList<>();
-            log.info("New TestData instance created");
         }
     }
 
@@ -65,11 +67,6 @@ public class Utilities {
             this.stepName = stepName;
             this.tempPath = tempPath;
         }
-    }
-
-    @Attachment(value = "Screenshot", type = "image/png")
-    public byte[] takeScreenshot(WebDriver driver) {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
     public void HighlightElementScreenshot(WebDriver driver, WebElement element, String fileName) {
@@ -92,6 +89,12 @@ public class Utilities {
         }
     }
 
+    // This method attaches a screenshot to the Allure report
+    public static void attachPageScreenshot(WebDriver webDriver, String stepName) {
+        byte[] screenshotBytes = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+        Allure.attachment(stepName, new ByteArrayInputStream(screenshotBytes));
+    }
+
     public void takeScreenshot(WebDriver driver, String fileName) throws IOException, InterruptedException {
         Thread.sleep(1000);
         if (currentTest == null || currentTest.screenshots == null) {
@@ -102,7 +105,6 @@ public class Utilities {
             File tempDir = new File(TEMP_DIR);
             if (!tempDir.exists()) {
                 boolean created = tempDir.mkdirs();
-                log.info("Temp directory created: " + created);
             }
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             String tempPath = TEMP_DIR + UUID.randomUUID() + "_" + fileName + BaseConfig.SCREENSHOT_TYPE;
@@ -110,7 +112,7 @@ public class Utilities {
             FileUtils.copyFile(screenshot, tempFile);
             String stepName = fileName.split("\\.")[0];
             currentTest.screenshots.add(new ScreenshotInfo(stepName, tempPath));
-            log.info("Screenshot added: " + tempPath);
+            attachPageScreenshot(driver, stepName);
         } catch (Exception e) {
             log.error("Error in takeScreenshot", e);
             throw e;
@@ -223,7 +225,6 @@ public class Utilities {
             }
             // Close the document
             document.close();
-            log.info("Document generated successfully");
             // Cleanup
             cleanup();
         } catch (Exception e) {
@@ -252,7 +253,6 @@ public class Utilities {
             int statusCode = response.getStatusCode();
             String responseBody = response.getBody().asString();
             currentTest.apiResponses.add(new APIResponseInfo(stepName, statusCode, responseBody));
-            log.info("API response added: " + stepName);
         } catch (Exception e) {
             log.error("Error adding API response", e);
         }

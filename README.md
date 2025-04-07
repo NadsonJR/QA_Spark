@@ -1,3 +1,5 @@
+Claro, aqui está a atualização do `README.md` com as novas mudanças:
+
 ```markdown
 # Web Automation Project
 
@@ -81,7 +83,7 @@ mvn test
 2. To run specific features, modify the tags in `TestRunner.java`:
 ```java
 @CucumberOptions(
-    tags = "@login"  // or @Checkout
+        tags = "@login"  // or @Checkout
 )
 ```
 

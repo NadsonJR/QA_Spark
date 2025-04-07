@@ -25,17 +25,6 @@
 
     <dependencies>
 
-        <!-- JavaFX -->
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>17.0.2</version>
-        </dependency>
 
         <!-- PDF -->
         <dependency>
@@ -43,13 +32,6 @@
             <artifactId>itext7-core</artifactId>
             <version>9.1.0</version>
             <type>pom</type>
-        </dependency>
-
-        <!-- Thumbnails -->
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
-            <version>0.4.14</version>
         </dependency>
 
         <dependency>
@@ -69,12 +51,6 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite-api</artifactId>
             <version>1.8.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <version>7.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -112,12 +88,15 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Cucumber JUnit Platform Engine -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit-platform-engine</artifactId>
             <version>7.11.0</version>
             <scope>test</scope>
         </dependency>
+
         <!-- Log4j2  -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -184,13 +163,6 @@
             <version>6.0.0</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- JSON parsing (Jackson já incluso no Spring Boot Web) -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.18.2</version>
-        </dependency>
         <!-- Driver do MySQL -->
         <dependency>
             <groupId>mysql</groupId>
@@ -233,26 +205,6 @@
                             <arguments>
                                 <argument>setup-edgedriver.sh</argument>
                             </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
-                <executions>
-                    <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
-                        <id>default-cli</id>
-                        <configuration>
-                            <mainClass>com.desafio.desafio/com.desafio.desafio.HelloApplication</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                            <noHeaderFiles>true</noHeaderFiles>
                         </configuration>
                     </execution>
                 </executions>
