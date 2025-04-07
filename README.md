@@ -1,5 +1,3 @@
-Claro, aqui está a atualização do `README.md` com as novas mudanças:
-
 ```markdown
 # Web Automation Project
 
