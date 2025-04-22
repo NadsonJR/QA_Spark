@@ -1,7 +1,7 @@
 package org.desafio.pages;
 
 import lombok.extern.log4j.Log4j2;
-import org.desafio.utils.Utilities;
+import org.desafio.utils.DocumentConfig;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,12 +19,12 @@ public class LoginPage {
     private By loginButton = By.id("login-button");
     private By usernameInput = By.id("user-name");
     private By errorLoginMsg = By.xpath("//div//h3[@data-test=\"error\"]");
-    private Utilities utilities;
+    private DocumentConfig documentConfig;
 
     // Constructor
     public LoginPage(WebDriver driver) {
         this.driver = driver;
-        utilities = new Utilities();
+        documentConfig = new DocumentConfig();
     }
 
     public void navigateTo(String url, String step) throws IOException, InterruptedException {
@@ -43,22 +43,22 @@ public class LoginPage {
         WebElement usernameElement = driver.findElement(usernameInput);
         usernameElement.clear();
         usernameElement.sendKeys(username);
-        utilities.HighlightElementScreenshot(driver, usernameElement, step);
+        documentConfig.HighlightElementScreenshot(driver, usernameElement, step);
     }
     public void enterPassword(String password, String step) {
         WebElement passwordElement = driver.findElement(passwordInput);
         passwordElement.clear();
         passwordElement.sendKeys(password);
-        utilities.HighlightElementScreenshot(driver, passwordElement, step);
+        documentConfig.HighlightElementScreenshot(driver, passwordElement, step);
     }
     public void clickLoginButton(String step) {
         WebElement loginBtn = driver.findElement(loginButton);
-        utilities.HighlightElementScreenshot(driver, loginBtn, step);
+        documentConfig.HighlightElementScreenshot(driver, loginBtn, step);
         loginBtn.click();
     }
     public void validateErroLoginMsg(String step){
         WebElement errorMsg = driver.findElement(errorLoginMsg);
-        utilities.HighlightElementScreenshot(driver, errorMsg, step);
+        documentConfig.HighlightElementScreenshot(driver, errorMsg, step);
         Assert.assertEquals(errorMsg.getText(),"Epic sadface: Username and password do not match any user in this service");
     }
 
@@ -69,10 +69,10 @@ public class LoginPage {
     public void isTextPresent(String text, String step) throws IOException, InterruptedException {
         if (driver.getPageSource().contains(text)) {
             log.info("Text is present");
-            utilities.takeScreenshot(driver, step);
+            documentConfig.takeScreenshot(driver, step);
         } else {
             log.error("Text is not present");
-            utilities.takeScreenshot(driver, step);
+            documentConfig.takeScreenshot(driver, step);
             Assert.fail("Text is not present");
         }
 
@@ -82,10 +82,10 @@ public class LoginPage {
         String actualTitle = getPageTitle();
         if (actualTitle.equals(expectedTitle)) {
             log.info("Title is correct");
-            utilities.takeScreenshot(driver, "Title is correct");
+            documentConfig.takeScreenshot(driver, "Title is correct");
         } else {
             log.error("Title is incorrect");
-            utilities.takeScreenshot(driver, "Title is incorrect");
+            documentConfig.takeScreenshot(driver, "Title is incorrect");
             Assert.fail("Title is incorrect");
         }
     }

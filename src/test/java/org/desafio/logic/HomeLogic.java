@@ -5,7 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.desafio.config.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.desafio.pages.HomePage;
-import org.desafio.utils.Utilities;
+import org.desafio.utils.DocumentConfig;
 
 import java.io.IOException;
 
@@ -14,11 +14,11 @@ import java.io.IOException;
 public class HomeLogic {
     private WebDriver driver;
     private String step = "";
-    private Utilities utilities;
+    private DocumentConfig documentConfig;
     private HomePage homePage;
 
     public HomeLogic() {
-        utilities = new Utilities();
+        documentConfig = new DocumentConfig();
         driver = DriverManager.getDriver(); // Initialize the driver
         homePage = new HomePage(driver); // Pass the driver to HomePage
     }

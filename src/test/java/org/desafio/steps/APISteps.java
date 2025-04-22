@@ -25,8 +25,9 @@ public class APISteps {
 
     @Given("I get {string}")
     public void iGetResource(String resource) {
-         response = apiLogic.getBase(resource);
+        response = apiLogic.getBase(resource);
     }
+
     @Then("I should see the status code {int}")
     public void i_should_see_the_status_code(Integer statusCode) {
         apiLogic.validateStatusCode(statusCode, response);
@@ -34,8 +35,9 @@ public class APISteps {
 
     @Given("I get {string} by id {int}")
     public void i_get_by_id(String resource, Integer int1) {
-        response = apiLogic.getUserById(resource,int1);
+        response = apiLogic.getUserById(resource, int1);
     }
+
     @Given("I create a {string} with the following data")
     public void i_create_a_with_the_following_data(String route, DataTable table) {
         List<Map<String, String>> rows = table.asMaps();
@@ -50,10 +52,12 @@ public class APISteps {
     public void i_update_a_user() {
         response = apiLogic.updateUser(4, faker.name().fullName(), faker.job().title());
     }
+
     @Given("I delete a user")
     public void i_delete_a_user() {
         response = apiLogic.deleteUser(4);
     }
+
     @Given("I update last created user")
     public void i_update_last_created_user() {
         response = apiLogic.updateLastCreatedUser(faker.name().fullName(), faker.job().title());

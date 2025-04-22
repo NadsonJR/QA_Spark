@@ -1,12 +1,10 @@
 package org.desafio.logic;
 import io.qameta.allure.Step;
-import com.itextpdf.layout.Document;
 import lombok.extern.log4j.Log4j2;
 import org.desafio.pages.LoginPage;
-import org.desafio.utils.Utilities;
+import org.desafio.utils.DocumentConfig;
 import org.desafio.pages.HomePage;
 import org.desafio.config.DriverManager;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -15,14 +13,14 @@ import java.io.IOException;
 public class LoginLogic {
     private String step = "";
     public WebDriver driver;
-    private Utilities utilities;
+    private DocumentConfig documentConfig;
     private LoginPage loginPage;
     private HomePage homePage;
 
     public LoginLogic() {
         this.driver = DriverManager.getDriver();
         DriverManager.addDriver(driver);
-        utilities = new Utilities();
+        documentConfig = new DocumentConfig();
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
     }
@@ -45,7 +43,7 @@ public class LoginLogic {
         step = "Fill input email";
         log.info(step);
         loginPage.enterEmail(text);
-        utilities.takeScreenshot(driver, step);
+        documentConfig.takeScreenshot(driver, step);
     }
 
     @Step("Enter username {text}")

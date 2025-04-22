@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.desafio.config.BaseConfig;
-import org.desafio.utils.Utilities;
+import org.desafio.utils.DocumentConfig;
 import org.json.JSONObject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,10 +13,10 @@ import static org.hamcrest.Matchers.equalTo;
 public class APILogic {
     private Response response;
     private int lastCreatedUserId;
-    private Utilities utilities;
+    private DocumentConfig documentConfig;
 
     public APILogic() {
-        utilities = new Utilities();
+        documentConfig = new DocumentConfig();
         BaseConfig.setupRestAssured();
     }
     @Step("Get users")
@@ -24,7 +24,7 @@ public class APILogic {
         response = RestAssured.given()
                 .when()
                 .get(BaseConfig.API_BASE_URL+ resource);
-        utilities.addResponseToDocument(response);
+        documentConfig.addResponseToDocument(response);
         return response;
     }
     @Step("Get user by id {id}")
@@ -32,7 +32,7 @@ public class APILogic {
         response = RestAssured.given()
                 .when()
                 .get(BaseConfig.API_BASE_URL + resource+"/"+id);
-        utilities.addResponseToDocument(response);
+        documentConfig.addResponseToDocument(response);
         return response;
     }
     @Step("Create user with email {email} and password {password}")
@@ -44,7 +44,7 @@ public class APILogic {
                 .body(requestBody)
                 .when()
                 .post(BaseConfig.API_BASE_URL+ route);
-        utilities.addResponseToDocument(response);
+        documentConfig.addResponseToDocument(response);
         if (response.getStatusCode() == 201) {
             lastCreatedUserId = response.jsonPath().getInt("id");
         }
@@ -59,7 +59,7 @@ public class APILogic {
                 .body(requestBody)
                 .when()
                 .put(BaseConfig.API_BASE_URL + id);
-        utilities.addResponseToDocument(response);
+        documentConfig.addResponseToDocument(response);
         return response;
     }
     @Step("Update last created user with name {name} and job {job}")
@@ -71,7 +71,7 @@ public class APILogic {
         response = RestAssured.given()
                 .when()
                 .delete(BaseConfig.API_BASE_URL + id);
-        utilities.addResponseToDocument(response);
+        documentConfig.addResponseToDocument(response);
         return response;
     }
     @Step("Delete last created user")

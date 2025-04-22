@@ -6,7 +6,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import lombok.Getter;
 import lombok.Setter;
-import org.desafio.utils.Utilities;
+import org.desafio.utils.DocumentConfig;
 import io.restassured.response.Response;
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class CucumberHooks {
     private static String scenarioName;
     private static String scenarioTag;
     private static String scenarioTags;
-    private static final Utilities utilities = new Utilities();
+    private static final DocumentConfig DOCUMENT_CONFIG = new DocumentConfig();
 
     @Setter
     private static Response response;
@@ -30,12 +30,12 @@ public class CucumberHooks {
         }
         scenarioName = scenario.getName();
         scenarioTag = scenario.getSourceTagNames().iterator().next().replace("@", "");
-        documentEvidence = utilities.createDocumentPDF(scenarioName, scenarioTag);
+        documentEvidence = DOCUMENT_CONFIG.createDocumentPDF(scenarioName, scenarioTag);
     }
     @After(order = 1)
     public void tearDown(Scenario scenario) throws IOException {
         String status = scenario.isFailed() ? "FAILED" : "PASSED";
-        utilities.generateDocumentPDF(documentEvidence, status);
+        DOCUMENT_CONFIG.generateDocumentPDF(documentEvidence, status);
         if (!scenarioTags.contains("API")){
             DriverManager.quitDriver();
         }

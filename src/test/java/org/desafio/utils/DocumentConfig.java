@@ -9,7 +9,6 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
@@ -29,7 +28,7 @@ import java.util.UUID;
 import com.itextpdf.layout.borders.SolidBorder;
 
 @Log4j2
-public class Utilities {
+public class DocumentConfig {
     private static final String TEMP_DIR = "temp_screenshots/";
 
     private static class APIResponseInfo {

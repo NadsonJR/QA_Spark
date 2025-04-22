@@ -28,6 +28,7 @@ public class ChekoutSteps {
     public void i_open_the_swag_labs() throws IOException, InterruptedException {
         loginLogic.navigateTo(BaseConfig.BASE_URL);
     }
+
     @Given("Login on Swag Labs")
     public void login_on_swag_labs() throws InterruptedException , IOException{
         loginLogic.enterUsername("standard_user");
@@ -54,6 +55,5 @@ public class ChekoutSteps {
         homeLogic.clickFinishButton();
         homeLogic.validateCompleteCheckout();
     }
-
 
 }
