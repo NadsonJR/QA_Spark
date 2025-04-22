@@ -23,14 +23,14 @@ public class WaitUtils {
     }
 
     // Espera até que o elemento esteja clicável
-    public void waitForElementToBeClickable(WebElement element, int timeoutInSeconds) {
+    public void waitForElementToBeClickable(By element, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     // Espera até que um elemento desapareça
-    public void waitForElementToDisappear(WebElement element, int timeoutInSeconds) {
+    public void waitForElementToDisappear(By element, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        wait.until(ExpectedConditions.invisibilityOf(element));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(element));
     }
 }
