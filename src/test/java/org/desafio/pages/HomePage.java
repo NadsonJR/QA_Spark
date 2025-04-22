@@ -55,28 +55,28 @@ public class HomePage {
         Assert.assertEquals(homePageTitleElement.getText(),"Products");
     }
     public void addSauceBikeLightToCart(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(sauceBikeLightBtnAddCart,10);
+        waitUtils.waitForElementToBeVisible(sauceBikeLightBtnAddCart);
         WebElement btnAddCartBikeLight = driver.findElement(sauceBikeLightBtnAddCart);
         documentConfig.HighlightElementScreenshot(driver, btnAddCartBikeLight, step);
-        Thread.sleep(1000);
+        waitUtils.waitForElementToBeClickable(sauceBikeLightBtnAddCart);
         btnAddCartBikeLight.click();
     }
 
     public void validateRemoveBtn(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(removeBtnBikeLight,10);
+        waitUtils.waitForElementToBeVisible(removeBtnBikeLight);
         WebElement removeBtnBikeLightElement = driver.findElement(removeBtnBikeLight);
         documentConfig.HighlightElementScreenshot(driver, removeBtnBikeLightElement, step);
         Assert.assertEquals(removeBtnBikeLightElement.getText(),"Remove");
     }
 
     public void validateCart(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(cart,10);
+        waitUtils.waitForElementToBeVisible(cart);
         WebElement cartElement = driver.findElement(cart);
         documentConfig.HighlightElementScreenshot(driver, cartElement, step);
         Assert.assertEquals(cartElement.getText(),"1");
     }
     public void openCart(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(cartIcon,10);
+        waitUtils.waitForElementToBeVisible(cartIcon);
         WebElement cartElement = driver.findElement(cartIcon);
         documentConfig.HighlightElementScreenshot(driver, cartElement, step);
         cartElement.click();
@@ -118,14 +118,14 @@ public class HomePage {
     }
 
     public void clickCheckoutButton(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(checkoutBtn,10);
+        waitUtils.waitForElementToBeVisible(checkoutBtn);
         WebElement checkoutBtnElement = driver.findElement(checkoutBtn);
         documentConfig.HighlightElementScreenshot(driver, checkoutBtnElement, step);
         checkoutBtnElement.click();
     }
 
     public void fillZipForm(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(zipForm,10);
+        waitUtils.waitForElementToBeVisible(zipForm);
         WebElement zipFormElement = driver.findElement(zipForm);
         WebElement firstNameElement = driver.findElement(firstName);
         firstNameElement.sendKeys(faker.name().firstName());
@@ -137,7 +137,7 @@ public class HomePage {
     }
 
     public void clickContinueButton(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(continueBtn,10);
+        waitUtils.waitForElementToBeVisible(continueBtn);
         WebElement continueBtnElement = driver.findElement(continueBtn);
         documentConfig.HighlightElementScreenshot(driver, continueBtnElement, step);
         continueBtnElement.click();
@@ -147,14 +147,14 @@ public class HomePage {
         validatePrices();
     }
     public void clickFinishButton(String step) throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(finishBtn,10);
+        waitUtils.waitForElementToBeVisible(finishBtn);
         WebElement finishBtnElement = driver.findElement(finishBtn);
         documentConfig.HighlightElementScreenshot(driver, finishBtnElement, step);
         finishBtnElement.click();
     }
 
     public void validatePrices() throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(itemCartPrice,10);
+        waitUtils.waitForElementToBeVisible(itemCartPrice);
         WebElement itemCartPriceElement = driver.findElement(itemCartPrice);
         if (itemCartPriceElement.getText().contains("$9.99")){
             log.info("The product price is correct");
@@ -213,7 +213,7 @@ public class HomePage {
     }
 
     public void validateCompleteCheckout() throws InterruptedException {
-        waitUtils.waitForElementToBeVisible(completeCheckout,10);
+        waitUtils.waitForElementToBeVisible(completeCheckout);
         WebElement completeCheckoutElement = driver.findElement(completeCheckout);
         WebElement completeCheckoutDescriptionElement = driver.findElement(completeCheckoutDescription);
         if(completeCheckoutElement.getText().contains("Thank you for your order!")){
