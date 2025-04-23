@@ -30,7 +30,7 @@ public class DriverManager {
     public static WebDriver getDriver() {
         if (driver == null) {
             EdgeOptions options = new EdgeOptions();
-            //options.addArguments("--headless");
+            options.addArguments("--headless");
             options.addArguments("--window-size=1280,720");
             options.addArguments("--disable-gpu");
             driver = new EdgeDriver(options);
