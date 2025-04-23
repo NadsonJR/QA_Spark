@@ -31,7 +31,6 @@ public class LoginLogic {
         log.info(step);
         loginPage.navigateTo(url, step);
     }
-
     @Step("Validate title {expectedTitle}")
     public void validateTitle(String expectedTitle) throws InterruptedException, IOException {
         step = "Validate title";
@@ -45,7 +44,6 @@ public class LoginLogic {
         loginPage.enterEmail(text);
         documentConfig.takeScreenshot(driver, step);
     }
-
     @Step("Enter username {text}")
     public void enterUsername(String username) throws InterruptedException, IOException {
         step = "Fill input username";
