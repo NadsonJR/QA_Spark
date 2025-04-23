@@ -21,7 +21,7 @@ public class HomePage {
     private WaitUtils waitUtils;
     // Web elements
     private By homePageTitle = By.xpath("//span[@class='title'][contains(text(),'Products')]");
-    private By sauceBikeLightBtnAddCart = By.id("add-to-cart-sauce-labs-bike-light");
+    private By sauceBikeLightBtnAddCart = By.xpath("//button[@name='add-to-cart-sauce-labs-bike-light']");
     private By cart = By.xpath("//span[@class='shopping_cart_badge']");
     private By removeBtnBikeLight = By.id("remove-sauce-labs-bike-light");
     private By itemCart = By.xpath("//div[@class='cart_item']");

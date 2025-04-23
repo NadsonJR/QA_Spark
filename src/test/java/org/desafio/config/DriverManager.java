@@ -4,6 +4,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +20,8 @@ public class DriverManager {
         }
     }
     public DriverManager() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        WebDriverManager.edgedriver().setup();
+        driver = new EdgeDriver();
     }
     public static void addDriver(WebDriver driver) {
         drivers.add(driver);
@@ -26,13 +29,12 @@ public class DriverManager {
 
     public static WebDriver getDriver() {
         if (driver == null) {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless");
+            EdgeOptions options = new EdgeOptions();
+            //options.addArguments("--headless");
             options.addArguments("--window-size=1280,720");
             options.addArguments("--disable-gpu");
-            driver = new ChromeDriver(options);
+            driver = new EdgeDriver(options);
             driver.manage().window().maximize();
-//            driver = new ChromeDriver();
         }
         return driver;
     }
